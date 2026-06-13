@@ -230,4 +230,1059 @@
     .animatedLabel .from{color:#9bdfff}
     .animatedLabel .to{color:#dca6ff}
     .barModel{
-      display:grid; gap:0; width:min(100%,420px); border:3px solid rgba(255,255,255,.9); border-radius:14px; overflow:hidden; height:46px; background:rgba(255,255,255,.03
+      display:grid; gap:0; width:min(100%,420px); border:3px solid rgba(255,255,255,.9); border-radius:14px; overflow:hidden; height:46px; background:rgba(255,255,255,.03);
+      transition:all .65s ease;
+    }
+    .barModel.changing{
+      animation:fractionGlow 1.7s ease-in-out;
+      border-color:#ffe66d;
+      box-shadow:0 0 24px rgba(255,230,109,.38);
+    }
+    .barModel.changed{
+      animation:fractionGlow .9s ease-out;
+      border-color:#dca6ff;
+      box-shadow:0 0 24px rgba(157,92,255,.38);
+    }
+    .segment{border-right:2px solid rgba(255,255,255,.82); background:rgba(255,255,255,.04)}
+    .segment:last-child{border-right:0}
+    .segment.shaded{
+      background:repeating-linear-gradient(135deg, rgba(157,92,255,.82) 0 8px, rgba(83,230,255,.72) 8px 16px);
+      box-shadow:inset 0 0 12px rgba(255,255,255,.12);
+      animation:shadeGlow .75s ease-out;
+    }
+    .barCaption{color:#effbff; font-size:17px; font-weight:900; min-height:22px; text-align:center}
+    .miniFrac.attention, .times.attention, .arrow.attention, .animatedLabel.attention, .barCaption.attention{
+      animation:fractionAttention 1s ease-in-out 2;
+    }
+    @keyframes fractionGlow{
+      0%,100%{filter:brightness(1)}
+      50%{filter:brightness(1.55)}
+    }
+    @keyframes shadeGlow{
+      0%{filter:brightness(2)}
+      100%{filter:brightness(1)}
+    }
+    @keyframes fractionAttention{
+      0%,100%{color:inherit}
+      50%{color:#ffe66d; text-shadow:0 0 14px rgba(255,230,109,.55)}
+    }
+    .explainText{color:#d8f4ff; font-size:17px; font-weight:900; margin:0; text-align:center}
+
+    .modalActions{display:flex; justify-content:center; gap:10px; margin-top:2px; flex-wrap:wrap}
+    .nextBtn{display:none; border:0; border-radius:18px; padding:12px 18px; font-size:18px; font-weight:950; color:#051d2a; background:linear-gradient(180deg,#8ff8ff,#39d7ff); box-shadow:0 5px 0 #147b91; cursor:pointer}
+    .nextBtn.show{display:inline-block}
+
+    .controlPad{position:fixed; left:14px; bottom:16px; z-index:8; width:142px; height:142px; pointer-events:auto; display:none}
+    .controlPad button{position:absolute; width:48px; height:48px; border-radius:16px; border:1px solid rgba(255,255,255,.2); background:rgba(6,16,38,.76); color:#fff; font-size:22px; font-weight:950; box-shadow:0 0 12px rgba(83,230,255,.12)}
+    #upBtn{left:47px;top:0} #leftBtn{left:0;top:47px} #rightBtn{right:0;top:47px} #downBtn{left:47px;bottom:0}
+    .mobileRescue{position:fixed; right:14px; bottom:24px; z-index:8; display:none; pointer-events:auto}
+    .mobileRescue button{border:0; border-radius:22px; padding:16px 18px; font-weight:950; color:#051d2a; background:linear-gradient(180deg,#ffef7d,#ffbd36); box-shadow:0 5px 0 #9a6400}
+
+    .rescueVideoOverlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:24;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,.88);
+      padding:14px;
+    }
+    .rescueVideoBox{
+      width:min(920px,96vw);
+      border-radius:24px;
+      border:1px solid rgba(83,230,255,.45);
+      background:rgba(4,10,25,.96);
+      box-shadow:0 0 36px rgba(83,230,255,.22);
+      padding:10px;
+      text-align:center;
+    }
+    .rescueVideoBox video{
+      width:100%;
+      max-height:76svh;
+      border-radius:18px;
+      background:#000;
+      display:block;
+    }
+    .rescueVideoText{
+      padding:8px 4px 2px;
+      color:#eafcff;
+      font-weight:950;
+      font-size:clamp(16px,3vw,22px);
+    }
+    .skipVideoBtn{
+      margin-top:8px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border-radius:14px;
+      padding:8px 12px;
+      font-weight:950;
+      cursor:pointer;
+    }
+    .finalVideoOverlay{
+      z-index:25;
+      background:rgba(0,0,0,.92);
+    }
+    .finalVideoText{
+      color:#ffe66d;
+      text-shadow:0 0 16px rgba(255,230,109,.32);
+    }
+
+    .endingThanks{display:none; position:fixed; inset:0; z-index:26; align-items:center; justify-content:center; padding:18px; background:rgba(0,0,0,.42)}
+    .thanksCard{width:min(760px,94vw); border-radius:28px; border:1px solid rgba(83,230,255,.45); background:linear-gradient(180deg,rgba(10,22,55,.96),rgba(5,11,27,.98)); text-align:center; padding:24px; box-shadow:0 0 36px rgba(83,230,255,.2)}
+    .thanksCard h1{margin:0 0 8px; font-size:clamp(26px,6vw,50px); color:#f8ffff; text-shadow:0 0 18px rgba(83,230,255,.35)}
+    .thanksCard p{font-size:clamp(16px,3vw,22px); color:#dff5ff}
+
+    .confetti{position:fixed; inset:0; z-index:26; pointer-events:none; overflow:hidden}
+    .confetti span{position:absolute; top:-20px; width:10px; height:16px; border-radius:3px; animation:fall 1.8s linear forwards}
+    @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+
+    @media (max-width:720px){
+      .topbar{top:5px;left:6px;right:6px;gap:5px}
+      .badge{padding:7px 8px;font-size:13px;min-height:34px}
+      .progressOuter{width:30vw}
+      .promptBox{bottom:76px;font-size:14px;padding:10px}
+      .soundBtn{top:48px;right:6px;font-size:12px;padding:7px 9px}
+      .missionGrid{grid-template-columns:1fr;gap:8px}
+      .missionItem{min-height:54px;padding:8px}
+      .card{padding:16px;border-radius:22px}
+      .quizCard{padding:10px;border-radius:20px; max-height:98svh}
+      .questionPanel{gap:6px;padding:8px}
+      .frac{min-width:90px;font-size:33px;padding:8px 10px}
+      .barLine{width:58px}
+      .eq{font-size:40px}
+      .label{font-size:12px;padding:5px 9px}
+      .explainGrid{grid-template-columns:1fr}
+      .modelTitle{font-size:18px}
+      .changeLine{gap:10px}
+      .miniFrac{font-size:24px}
+      .times{font-size:19px}
+      .stepText,.explainText,.animatedLabel,.barCaption{font-size:15px}
+      .barModel{height:40px}
+      .controlPad,.mobileRescue{display:block}
+      input[type=number]{font-size:24px;padding:9px 10px}
+      .simplifyAnswer input{width:82px;font-size:20px}
+      .wholeAnswer input{width:82px;font-size:21px}
+      .checkBtn{font-size:18px;padding:12px 14px}
+      .resultMsg{font-size:16px}
+    }
+    @media (max-width:480px){
+      .questionPanel{grid-template-columns:1fr auto 1fr}
+      .frac{min-width:82px; font-size:30px}
+      .barLine{width:50px}
+      .quizTitle{font-size:16px}
+      .pill{font-size:12px;padding:6px 9px}
+      .answerRow{gap:8px}
+      input[type=number]{width:min(170px,45vw)}
+      .simplifyAnswer input{width:72px}
+      .wholeAnswer input{width:76px}
+      .checkBtn{font-size:16px}
+      .smallBtn,.nextBtn{font-size:15px}
+    }
+    @media (max-height:640px){
+      .card h1{font-size:28px}
+      .card h2{font-size:18px}
+      .card p{font-size:14px}
+      .missionGrid{display:none}
+      .quizCard{gap:6px}
+      .questionPanel{padding:8px}
+      .frac{font-size:30px; min-width:86px}
+      .barModel{height:36px}
+      .changeLine{margin:0}
+      .miniFrac{font-size:22px}
+      .stepText,.explainText,.animatedLabel,.barCaption{font-size:14px}
+      .resultMsg{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div class="hud">
+  <div class="topbar">
+    <div class="badge">
+      <span>🛸</span>
+      <div>
+        <div>Simplified Fractions Rescue</div>
+        <div class="small" id="missionState">Opening mission</div>
+      </div>
+    </div>
+    <div class="badge">
+      <span>👽</span>
+      <div>Aliens Saved: <span id="savedCount">0</span>/10</div>
+      <div class="progressOuter"><div class="progressInner" id="progressInner"></div></div>
+    </div>
+  </div>
+  <button class="soundBtn" id="soundBtn" type="button">🔊 Ambience On</button>
+  <div class="promptBox" id="promptBox">
+    <span id="promptText">Alien found!</span>
+    <button id="rescueBtn">Answer Question</button>
+  </div>
+</div>
+
+<audio id="spaceAmbience" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Addition-of-Unlike-Fractions/26fdebdfbc92c85d8f2a367969f3b4f4017c33d8/placidplace-spaceship-ambience-with-effects-21420.mp3" loop preload="auto"></audio>
+<audio id="beamSound" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Equivalent-Fractions/4b4ac8a0836a07931dd0ae24e328fc47e4dcba03/yodguard-short-energy-beam-shot-3-482517.mp3" preload="auto"></audio>
+
+<div class="screen" id="startScreen">
+  <div class="card">
+    <h1>Uncle Joe and the Simplified Fractions Rescue</h1>
+    <h2>Save 10 aliens by simplifying fractions</h2>
+    <p>Uncle Joe walks into the UFO disc, disappears inside it, and flies across a barren planet. Steer the UFO above each alien and simplify one fraction to save it.</p>
+    <div class="missionGrid">
+      <div class="missionItem"><span>🚶‍♂️</span><span>Walk into UFO</span></div>
+      <div class="missionItem"><span>🛸</span><span>Fly across planet</span></div>
+      <div class="missionItem"><span>👽</span><span>Simplify to save</span></div>
+    </div>
+    <p><b>Controls:</b> WASD or Arrow Keys. On phones, use the direction buttons.</p>
+    <p><b>Math rule:</b> Denominators are never bigger than 12. If the numerator and denominator are the same, the answer is 1. Retry until correct. After every attempt, the model first shows the original fraction and then changes it into its simplest form.</p>
+    <button class="bigBtn" id="startBtn">Start Mission</button>
+  </div>
+</div>
+
+<div class="quizModal" id="quizModal">
+  <div class="quizCard">
+    <div class="quizHead">
+      <div class="quizTitle">Rescue Question <span id="questionNum">1</span> of 10</div>
+      <div class="pill">Denominator ≤ 12</div>
+    </div>
+
+    <div class="questionPanel">
+      <div class="fracBlock">
+        <div class="label">First fraction</div>
+        <div class="frac">
+          <div id="leftNum">1</div>
+          <div class="barLine"></div>
+          <div id="leftDen">2</div>
+        </div>
+      </div>
+      <div class="eq">=</div>
+      <div class="fracBlock">
+        <div class="label purple">Simplest form</div>
+        <div class="frac purple" id="rightFrac">
+          <div id="rightNum">?</div>
+          <div class="barLine"></div>
+          <div id="rightDen">?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="answerRow">
+      <div class="simplifyAnswer" id="fractionAnswerBox" aria-label="Simplified fraction answer">
+        <input id="answerNum" type="number" inputmode="numeric" min="1" placeholder="top" />
+        <div class="answerBar"></div>
+        <input id="answerDen" type="number" inputmode="numeric" min="1" placeholder="bottom" />
+      </div>
+      <div class="wholeAnswer" id="wholeAnswerBox" aria-label="Whole number answer">
+        <span>Simplest form:</span>
+        <input id="answerWhole" type="number" inputmode="numeric" min="1" placeholder="1" />
+      </div>
+      <button class="checkBtn" id="checkBtn">Check Answer</button>
+    </div>
+
+    <div class="resultMsg" id="resultMsg"></div>
+
+    <div class="explain" id="explainBox">
+      <div class="explainHeader">
+        <div class="modelTitle">Watch it change</div>
+        <button class="replayBtn" id="replayModelBtn" type="button">↻ Replay from start</button>
+        <button class="replayBtn nextStepReplay" id="nextModelStepBtn" type="button">Next step ▶</button>
+        <div class="phaseTag" id="phaseTag">Original fraction</div>
+      </div>
+      <div class="explainGrid">
+        <div>
+          <div class="changeLine">
+            <div class="miniFrac">
+              <div id="exA">1</div>
+              <div class="miniBar"></div>
+              <div id="exB">6</div>
+            </div>
+            <div class="times">
+              ÷ <span id="exFactorTop">2</span><br>
+              ÷ <span id="exFactorBottom">2</span>
+            </div>
+            <div class="arrow">→</div>
+            <div class="miniFrac">
+              <div id="exC">2</div>
+              <div class="miniBar"></div>
+              <div id="exD">12</div>
+            </div>
+          </div>
+          <div class="stepText" id="changedText">4/8 simplifies to 1/2</div>
+        </div>
+        <div class="animatedWrap">
+          <div class="animatedLabel" id="animatedLabel"><span class="from">Showing 4/8</span></div>
+          <div class="barModel" id="barModel"></div>
+          <div class="barCaption" id="barCaption">4 out of 8 parts are shaded.</div>
+        </div>
+      </div>
+      <p class="explainText" id="explainText">4/8 = 1/2. The amount is the same, but the fraction is simpler.</p>
+    </div>
+
+    <div class="modalActions">
+      <button class="smallBtn" id="tryAgainBtn">Try Again</button>
+      <button class="smallBtn" id="cheatSolveBtn">Teacher Cheat Solve</button>
+      <button class="nextBtn" id="saveAlienBtn">Beam Up Alien</button>
+    </div>
+  </div>
+</div>
+
+<div class="controlPad" id="controlPad">
+  <button id="upBtn">▲</button>
+  <button id="leftBtn">◀</button>
+  <button id="rightBtn">▶</button>
+  <button id="downBtn">▼</button>
+</div>
+<div class="mobileRescue" id="mobileRescue"><button id="mobileRescueBtn">Rescue</button></div>
+
+<div class="rescueVideoOverlay" id="rescueVideoOverlay">
+  <div class="rescueVideoBox">
+    <video id="firstRescueVideo" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Equivalent-Fractions/c0e24dea3de2cfeaf92b5cec51a7cfd78f0f7455/220638_medium.mp4" preload="auto" playsinline></video>
+    <div class="rescueVideoText">First alien rescued!</div>
+    <button class="skipVideoBtn" id="skipVideoBtn" type="button">Skip video</button>
+  </div>
+</div>
+
+<div class="rescueVideoOverlay finalVideoOverlay" id="finalThanksVideoOverlay">
+  <div class="rescueVideoBox">
+    <video id="finalThanksVideo" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Equivalent-Fractions/6615a9e42b09b1fb23fdcc554372cc1497b09e9c/ten_aliens_thanking_uncle_joe.mp4" preload="auto" playsinline></video>
+    <div class="rescueVideoText finalVideoText">All 10 aliens are saved!</div>
+    <button class="skipVideoBtn" id="skipFinalVideoBtn" type="button">Skip video</button>
+  </div>
+</div>
+
+<div class="endingThanks" id="endingThanks">
+  <div class="thanksCard">
+    <h1>Mission Complete!</h1>
+    <p>The 10 aliens gather around Uncle Joe.</p>
+    <p><b>“Thank you, Uncle Joe! You saved us by simplifying fractions!”</b></p>
+    <button class="bigBtn" id="playAgainBtn">Play Again</button>
+  </div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050918);
+  scene.fog = new THREE.Fog(0x050918, 28, 95);
+
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 220);
+  camera.position.set(0, 7, 13);
+
+  const clock = new THREE.Clock();
+  let modelTimers = [];
+  let modelStep = 0;
+
+  const UI = {
+    startScreen: document.getElementById('startScreen'), startBtn: document.getElementById('startBtn'),
+    soundBtn: document.getElementById('soundBtn'),
+    spaceAmbience: document.getElementById('spaceAmbience'),
+    beamSound: document.getElementById('beamSound'),
+    missionState: document.getElementById('missionState'), savedCount: document.getElementById('savedCount'), progressInner: document.getElementById('progressInner'),
+    promptBox: document.getElementById('promptBox'), promptText: document.getElementById('promptText'), rescueBtn: document.getElementById('rescueBtn'), mobileRescueBtn: document.getElementById('mobileRescueBtn'),
+    quizModal: document.getElementById('quizModal'), questionNum: document.getElementById('questionNum'), leftNum: document.getElementById('leftNum'), leftDen: document.getElementById('leftDen'),
+    rightFrac: document.getElementById('rightFrac'),
+    rightNum: document.getElementById('rightNum'), rightDen: document.getElementById('rightDen'),
+    fractionAnswerBox: document.getElementById('fractionAnswerBox'),
+    wholeAnswerBox: document.getElementById('wholeAnswerBox'),
+    answerNum: document.getElementById('answerNum'), answerDen: document.getElementById('answerDen'), answerWhole: document.getElementById('answerWhole'), checkBtn: document.getElementById('checkBtn'),
+    resultMsg: document.getElementById('resultMsg'), explainBox: document.getElementById('explainBox'), tryAgainBtn: document.getElementById('tryAgainBtn'), saveAlienBtn: document.getElementById('saveAlienBtn'),
+    exA: document.getElementById('exA'), exB: document.getElementById('exB'), exC: document.getElementById('exC'), exD: document.getElementById('exD'), exFactorTop: document.getElementById('exFactorTop'), exFactorBottom: document.getElementById('exFactorBottom'),
+    changedText: document.getElementById('changedText'), barModel: document.getElementById('barModel'), explainText: document.getElementById('explainText'),
+    animatedLabel: document.getElementById('animatedLabel'), barCaption: document.getElementById('barCaption'), phaseTag: document.getElementById('phaseTag'),
+    replayModelBtn: document.getElementById('replayModelBtn'),
+    nextModelStepBtn: document.getElementById('nextModelStepBtn'),
+    cheatSolveBtn: document.getElementById('cheatSolveBtn'),
+    rescueVideoOverlay: document.getElementById('rescueVideoOverlay'),
+    firstRescueVideo: document.getElementById('firstRescueVideo'),
+    skipVideoBtn: document.getElementById('skipVideoBtn'),
+    finalThanksVideoOverlay: document.getElementById('finalThanksVideoOverlay'),
+    finalThanksVideo: document.getElementById('finalThanksVideo'),
+    skipFinalVideoBtn: document.getElementById('skipFinalVideoBtn'),
+    endingThanks: document.getElementById('endingThanks'), playAgainBtn: document.getElementById('playAgainBtn'), confetti: document.getElementById('confetti')
+  };
+
+  let mode = 'opening_idle';
+  let introTime = 0;
+  let saved = 0;
+  let currentAlien = null;
+  let currentQuestion = null;
+  let beamTime = 0;
+  let endingTime = 0;
+  let ambienceOn = true;
+  let firstRescueVideoPlayed = false;
+
+  const keys = {};
+  const mobileKeys = {up:false,down:false,left:false,right:false};
+
+  const questions = [
+    {a:2,b:4,k:2},
+    {a:3,b:6,k:3},
+    {a:4,b:6,k:2},
+    {a:4,b:8,k:4},
+    {a:6,b:8,k:2},
+    {a:6,b:9,k:3},
+    {a:8,b:10,k:2},
+    {a:2,b:2,k:2,whole:true},
+    {a:3,b:3,k:3,whole:true},
+    {a:6,b:6,k:6,whole:true}
+  ];
+  function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+  shuffle(questions);
+
+  function makeMat(color, roughness=0.55, metalness=0.05){ return new THREE.MeshStandardMaterial({color, roughness, metalness}); }
+  const mats = {
+    ground: makeMat(0x7b5b42, .88, 0), darkRock: makeMat(0x3e3140, .9, 0), purpleRock: makeMat(0x5d4077, .88, 0),
+    ufo: new THREE.MeshStandardMaterial({color:0xb9c5d8, roughness:.28, metalness:.65}), ufoDark: new THREE.MeshStandardMaterial({color:0x35445c, roughness:.35, metalness:.55}),
+    dome: new THREE.MeshStandardMaterial({color:0x77eaff, emissive:0x0b5b77, transparent:true, opacity:.78, roughness:.1, metalness:.05}),
+    door: new THREE.MeshStandardMaterial({color:0x10223c, emissive:0x061329, roughness:.35, metalness:.3}), lightBlue: new THREE.MeshStandardMaterial({color:0x65eeff, emissive:0x1bb8e8, roughness:.25}),
+    alienEye: makeMat(0x071021, .2, .05), joeSkin: makeMat(0xffd2a3, .65, 0), joeHair: makeMat(0xe8e8e8, .55, 0), joeSuit: makeMat(0xeaf3ff, .5, 0),
+    black: makeMat(0x080a10, .5, 0), beam: new THREE.MeshBasicMaterial({color:0x65f5ff, transparent:true, opacity:.22, side:THREE.DoubleSide, depthWrite:false})
+  };
+
+  scene.add(new THREE.HemisphereLight(0x9dcaff, 0x4c2f20, 1.2));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(18, 26, 10); sun.castShadow = true; sun.shadow.mapSize.width = 1024; sun.shadow.mapSize.height = 1024; scene.add(sun);
+  const blueLight = new THREE.PointLight(0x52e6ff, 1.5, 35); blueLight.position.set(0, 8, 0); scene.add(blueLight);
+
+  const groundGeo = new THREE.PlaneGeometry(140, 140, 48, 48);
+  const pos = groundGeo.attributes.position;
+  for(let i=0;i<pos.count;i++){
+    const x = pos.getX(i), y = pos.getY(i);
+    const r = Math.sin(x*.22)*.25 + Math.cos(y*.18)*.22 + Math.sin((x+y)*.07)*.38;
+    pos.setZ(i, r);
+  }
+  groundGeo.computeVertexNormals();
+  const ground = new THREE.Mesh(groundGeo, mats.ground); ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
+  function addRock(x,z,s=1, mat=mats.darkRock){
+    const mesh = new THREE.Mesh(new THREE.DodecahedronGeometry(s,0), mat);
+    mesh.position.set(x, s*.45, z); mesh.rotation.set(Math.random(), Math.random(), Math.random()); mesh.scale.set(1.2,.55,.9); mesh.castShadow = true; mesh.receiveShadow = true; scene.add(mesh);
+  }
+  for(let i=0;i<52;i++){
+    const x = (Math.random()-.5)*120, z = (Math.random()-.5)*120; if(Math.abs(x)<8 && Math.abs(z)<8) continue;
+    addRock(x,z,Math.random()*1.1+.35, Math.random()>.55?mats.darkRock:mats.purpleRock);
+  }
+
+  const starGeo = new THREE.BufferGeometry();
+  const starPositions = [];
+  for(let i=0;i<450;i++){ starPositions.push((Math.random()-.5)*170, Math.random()*70+20, (Math.random()-.5)*170); }
+  starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPositions,3));
+  const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({color:0xdff8ff, size:.22, transparent:true, opacity:.9})); scene.add(stars);
+
+  function makeUncleJoe(){
+    const g = new THREE.Group();
+    const body = new THREE.Mesh(new THREE.CapsuleGeometry(.42, .95, 8, 16), mats.joeSuit); body.position.y = 1.05; body.castShadow = true; g.add(body);
+    const head = new THREE.Mesh(new THREE.SphereGeometry(.36, 24, 18), mats.joeSkin); head.position.y = 1.86; head.castShadow = true; g.add(head);
+    const hair = new THREE.Mesh(new THREE.SphereGeometry(.39, 16, 12, 0, Math.PI*2, 0, Math.PI*.48), mats.joeHair); hair.position.y = 2.03; hair.rotation.x = -0.12; g.add(hair);
+    const nose = new THREE.Mesh(new THREE.SphereGeometry(.06,10,8), mats.joeSkin); nose.position.set(0,1.86,.35); g.add(nose);
+    const eyeGeo = new THREE.SphereGeometry(.045, 10, 8); const eye1 = new THREE.Mesh(eyeGeo, mats.black), eye2 = new THREE.Mesh(eyeGeo, mats.black); eye1.position.set(-.13,1.94,.31); eye2.position.set(.13,1.94,.31); g.add(eye1,eye2);
+    const armGeo = new THREE.CapsuleGeometry(.08, .55, 6, 10); const arm1 = new THREE.Mesh(armGeo, mats.joeSuit), arm2 = new THREE.Mesh(armGeo, mats.joeSuit); arm1.position.set(-.48,1.25,.05); arm1.rotation.z=.35; arm2.position.set(.48,1.25,.05); arm2.rotation.z=-.35; g.add(arm1,arm2);
+    const legGeo = new THREE.CapsuleGeometry(.1, .55, 6, 10); const leg1 = new THREE.Mesh(legGeo, makeMat(0x2e4058,.6,0)), leg2 = new THREE.Mesh(legGeo, makeMat(0x2e4058,.6,0)); leg1.position.set(-.18,.42,0); leg2.position.set(.18,.42,0); g.add(leg1,leg2);
+    g.scale.set(1.1,1.1,1.1); g.userData.parts = {arm1,arm2,leg1,leg2};
+    return g;
+  }
+
+  function makeAlien(color=0x72ff68){
+    const mat = new THREE.MeshStandardMaterial({color, emissive:0x0b4a16, roughness:.58});
+    const g = new THREE.Group();
+    const body = new THREE.Mesh(new THREE.CapsuleGeometry(.32,.5,8,14), mat); body.position.y=.72; body.castShadow=true; g.add(body);
+    const head = new THREE.Mesh(new THREE.SphereGeometry(.42,24,18), mat); head.position.y=1.25; head.castShadow=true; g.add(head);
+    const eyeGeo = new THREE.SphereGeometry(.075,10,8); const e1 = new THREE.Mesh(eyeGeo, mats.alienEye), e2 = new THREE.Mesh(eyeGeo, mats.alienEye); e1.position.set(-.16,1.32,.34); e2.position.set(.16,1.32,.34); e1.scale.set(.8,1.25,.5); e2.scale.set(.8,1.25,.5); g.add(e1,e2);
+    const antennaGeo = new THREE.CapsuleGeometry(.025,.35,4,8); const a1 = new THREE.Mesh(antennaGeo, mat), a2 = new THREE.Mesh(antennaGeo, mat); a1.position.set(-.18,1.68,0); a1.rotation.z=-.42; a2.position.set(.18,1.68,0); a2.rotation.z=.42; g.add(a1,a2);
+    const ball1 = new THREE.Mesh(new THREE.SphereGeometry(.055,8,6), mat), ball2 = new THREE.Mesh(new THREE.SphereGeometry(.055,8,6), mat); ball1.position.set(-.3,1.86,0); ball2.position.set(.3,1.86,0); g.add(ball1,ball2);
+    const armGeo = new THREE.CapsuleGeometry(.045,.42,5,8); const arm1 = new THREE.Mesh(armGeo, mat), arm2 = new THREE.Mesh(armGeo, mat); arm1.position.set(-.4,.8,.05); arm1.rotation.z=.78; arm2.position.set(.4,.8,.05); arm2.rotation.z=-.78; g.add(arm1,arm2);
+    const legGeo = new THREE.CapsuleGeometry(.06,.36,5,8); const l1 = new THREE.Mesh(legGeo, mat), l2 = new THREE.Mesh(legGeo, mat); l1.position.set(-.15,.26,0); l1.rotation.z=.18; l2.position.set(.15,.26,0); l2.rotation.z=-.18; g.add(l1,l2);
+    const help = new THREE.PointLight(color,.75,5); help.position.y=2.2; g.add(help);
+    g.userData.parts = {arm1,arm2,body,head};
+    return g;
+  }
+
+  function makeUFO(){
+    const g = new THREE.Group();
+    const saucer = new THREE.Mesh(new THREE.SphereGeometry(1.55,48,20), mats.ufo); saucer.scale.set(1.8,.28,1.8); saucer.castShadow=true; g.add(saucer);
+    const underside = new THREE.Mesh(new THREE.SphereGeometry(1.08,32,16), mats.ufoDark); underside.position.y=-.18; underside.scale.set(1.55,.22,1.55); underside.castShadow=true; g.add(underside);
+    const dome = new THREE.Mesh(new THREE.SphereGeometry(.92,32,18,0,Math.PI*2,0,Math.PI*.55), mats.dome); dome.position.y=.32; dome.castShadow=true; g.add(dome);
+    const doorPivot = new THREE.Group(); doorPivot.position.set(0,-.02,1.52); const door = new THREE.Mesh(new THREE.BoxGeometry(.95,.55,.08), mats.door); door.castShadow=true; doorPivot.add(door); g.add(doorPivot);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.62,.035,10,64), mats.lightBlue); ring.rotation.x=Math.PI/2; ring.position.y=.02; g.add(ring);
+    for(let i=0;i<10;i++){ const angle=i/10*Math.PI*2; const light=new THREE.Mesh(new THREE.SphereGeometry(.12,16,10), mats.lightBlue); light.position.set(Math.cos(angle)*2.1,-.12,Math.sin(angle)*2.1); g.add(light); }
+    const beam = new THREE.Mesh(new THREE.ConeGeometry(1.6,5.2,48,1,true), mats.beam); beam.position.y=-2.75; beam.rotation.x=Math.PI; beam.visible=false; g.add(beam);
+    const beamGlow = new THREE.PointLight(0x65f5ff,0,11); beamGlow.position.y=-2.7; g.add(beamGlow);
+    g.userData = {doorPivot, beam, beamGlow};
+    return g;
+  }
+
+  const uncleJoe = makeUncleJoe(); uncleJoe.position.set(-8,0,0); scene.add(uncleJoe);
+  const ufo = makeUFO(); ufo.position.set(0,1.65,0); ufo.rotation.y = 0; scene.add(ufo);
+  const pad = new THREE.Mesh(new THREE.CylinderGeometry(3.2,3.6,.25,48), makeMat(0x2d344f,.55,.2)); pad.position.set(0,.12,0); pad.castShadow=true; pad.receiveShadow=true; scene.add(pad);
+
+  const alienPositions = [[-12,-12],[10,-15],[18,5],[-19,9],[6,18],[-5,27],[25,-25],[-27,-20],[31,16],[-34,28]];
+  const aliens = alienPositions.map((p,i)=>{
+    const colors = [0x72ff68,0x7bffcb,0xa8ff59,0x6bff8b,0xc4ff72,0x67eaff,0x9dff55,0x79ff97,0x64ffc8,0xb7ff6d];
+    const a = makeAlien(colors[i%colors.length]); a.position.set(p[0],0,p[1]); a.rotation.y = Math.random()*Math.PI*2; a.userData.index = i; a.userData.saved = false; a.userData.float = Math.random()*10; a.visible = false; scene.add(a);
+    const marker = new THREE.Mesh(new THREE.TorusGeometry(1.15,.045,8,32), mats.lightBlue); marker.rotation.x = Math.PI/2; marker.position.set(p[0],.08,p[1]); marker.visible = false; scene.add(marker); a.userData.marker = marker;
+    return a;
+  });
+  const endingAliens = [];
+  for(let i=0;i<10;i++){
+    const a = makeAlien(0x72ff68 + (i%3)*0x001500); const ang = i/10*Math.PI*2; a.position.set(Math.cos(ang)*4.8,0,Math.sin(ang)*4.8); a.rotation.y = -ang + Math.PI; a.visible = false; scene.add(a); endingAliens.push(a);
+  }
+
+  function updateUI(){
+    UI.savedCount.textContent = saved; UI.progressInner.style.width = `${(saved/10)*100}%`;
+    if(mode.startsWith('opening')) UI.missionState.textContent = 'Opening mission';
+    else if(mode === 'flying') UI.missionState.textContent = 'Find aliens';
+    else if(mode === 'quiz') UI.missionState.textContent = 'Answer question';
+    else if(mode === 'beam') UI.missionState.textContent = 'Alien rescue';
+    else if(mode === 'video_pause') UI.missionState.textContent = 'First rescue video';
+    else if(mode === 'ending_video') UI.missionState.textContent = 'Aliens thanking Uncle Joe';
+    else if(mode.startsWith('ending')) UI.missionState.textContent = 'Mission complete';
+  }
+
+  function resize(){ renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); }
+  window.addEventListener('resize', resize);
+
+  window.addEventListener('keydown', e=>{ keys[e.key.toLowerCase()] = true; if((e.key === 'e' || e.key === 'Enter') && mode === 'flying' && currentAlien) openQuestion(); });
+  window.addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
+  function bindHold(id, prop){ const el=document.getElementById(id); const start=e=>{e.preventDefault(); mobileKeys[prop]=true;}; const stop=e=>{e.preventDefault(); mobileKeys[prop]=false;}; el.addEventListener('pointerdown', start); el.addEventListener('pointerup', stop); el.addEventListener('pointercancel', stop); el.addEventListener('pointerleave', stop); }
+  bindHold('upBtn','up'); bindHold('downBtn','down'); bindHold('leftBtn','left'); bindHold('rightBtn','right');
+
+  UI.startBtn.addEventListener('click', ()=>{
+    UI.startScreen.style.display='none';
+    mode='opening_walk';
+    introTime=0;
+    updateUI();
+    startTone();
+    startAmbience();
+  });
+  UI.soundBtn.addEventListener('click', toggleAmbience);
+  UI.rescueBtn.addEventListener('click', openQuestion); UI.mobileRescueBtn.addEventListener('click', ()=>{ if(mode === 'flying' && currentAlien) openQuestion(); });
+  UI.checkBtn.addEventListener('click', checkAnswer);
+  UI.answerNum.addEventListener('keydown', e=>{ if(e.key==='Enter') UI.answerDen.focus(); });
+  UI.answerDen.addEventListener('keydown', e=>{ if(e.key==='Enter') checkAnswer(); });
+  UI.answerWhole.addEventListener('keydown', e=>{ if(e.key==='Enter') checkAnswer(); });
+  UI.tryAgainBtn.addEventListener('click', ()=>{
+    UI.answerNum.value='';
+    UI.answerDen.value='';
+    UI.answerWhole.value='';
+    if(currentQuestion && currentQuestion.isWhole){
+      UI.answerWhole.focus();
+    }else{
+      UI.answerNum.focus();
+    }
+    UI.resultMsg.textContent='Try again. The model can help you.';
+    UI.resultMsg.className='resultMsg bad';
+  });
+  UI.cheatSolveBtn.addEventListener('click', cheatSolve);
+  UI.replayModelBtn.addEventListener('click', ()=>{
+    if(currentQuestion && UI.explainBox.classList.contains('show')){
+      startStepByStepModel();
+    }
+  });
+  UI.nextModelStepBtn.addEventListener('click', ()=>{
+    if(currentQuestion && UI.explainBox.classList.contains('show')){
+      nextModelStep();
+    }
+  });
+  UI.saveAlienBtn.addEventListener('click', ()=>{ UI.quizModal.style.display='none'; beginBeam(); });
+  UI.playAgainBtn.addEventListener('click', ()=>location.reload());
+  UI.skipVideoBtn.addEventListener('click', closeFirstRescueVideo);
+  UI.firstRescueVideo.addEventListener('ended', closeFirstRescueVideo);
+  UI.skipFinalVideoBtn.addEventListener('click', closeFinalThanksVideo);
+  UI.finalThanksVideo.addEventListener('ended', closeFinalThanksVideo);
+
+  function setupExploration(){
+    mode = 'flying'; saved = 0; currentAlien = null; ufo.position.set(0,6,0); ufo.rotation.set(0,0,0); ufo.scale.set(1,1,1); uncleJoe.visible = false; pad.visible = false;
+    for(const a of aliens){ a.visible = true; a.userData.marker.visible = true; }
+    updateUI();
+  }
+
+  function openQuestion(){
+    if(!currentAlien || mode !== 'flying') return;
+    mode = 'quiz'; updateUI();
+
+    currentQuestion = questions[currentAlien.userData.index];
+    const q = currentQuestion;
+    q.c = q.a / q.k;
+    q.d = q.b / q.k;
+    q.isWhole = (q.c === 1 && q.d === 1);
+    q.answerNum = q.c;
+    q.answerDen = q.d;
+    q.answerWhole = 1;
+
+    UI.questionNum.textContent = saved + 1;
+    UI.leftNum.textContent = q.a;
+    UI.leftDen.textContent = q.b;
+
+    UI.rightFrac.classList.toggle('whole', q.isWhole);
+    UI.rightNum.innerHTML = '<span class="unknown">?</span>';
+    UI.rightDen.innerHTML = q.isWhole ? '' : '<span class="unknown">?</span>';
+
+    UI.fractionAnswerBox.style.display = q.isWhole ? 'none' : 'grid';
+    UI.wholeAnswerBox.style.display = q.isWhole ? 'flex' : 'none';
+
+    UI.answerNum.value='';
+    UI.answerDen.value='';
+    UI.answerWhole.value='';
+    UI.resultMsg.textContent='';
+    UI.resultMsg.className='resultMsg';
+    UI.explainBox.classList.remove('show');
+    UI.saveAlienBtn.classList.remove('show');
+    clearModelTimers();
+    UI.quizModal.style.display='flex';
+    setTimeout(()=> q.isWhole ? UI.answerWhole.focus() : UI.answerNum.focus(), 100);
+  }
+
+  function buildBarModel(parts, shaded){
+    UI.barModel.innerHTML = '';
+    UI.barModel.style.gridTemplateColumns = `repeat(${parts}, 1fr)`;
+    for(let i=0;i<parts;i++){
+      const seg = document.createElement('div');
+      seg.className = 'segment' + (i < shaded ? ' shaded' : '');
+      UI.barModel.appendChild(seg);
+    }
+  }
+
+  function clearModelTimers(){
+    modelTimers.forEach(timer => clearTimeout(timer));
+    modelTimers = [];
+  }
+
+  function clearFractionMotion(){
+    UI.barModel.classList.remove('changing', 'changed');
+    UI.animatedLabel.classList.remove('attention');
+    UI.barCaption.classList.remove('attention');
+    document.querySelectorAll('.miniFrac, .times, .arrow').forEach(el => el.classList.remove('attention'));
+  }
+
+  function startStepByStepModel(){
+    modelStep = 0;
+    renderModelStep();
+  }
+
+  function nextModelStep(){
+    if(modelStep < 2){
+      modelStep++;
+      renderModelStep();
+    }else{
+      // If pupils press again at the end, restart from the original fraction.
+      modelStep = 0;
+      renderModelStep();
+    }
+  }
+
+  function renderModelStep(){
+    const q = currentQuestion;
+    if(!q) return;
+
+    clearModelTimers();
+    clearFractionMotion();
+
+    if(modelStep === 0){
+      UI.phaseTag.textContent = 'Step 1 of 3';
+      UI.animatedLabel.innerHTML = `<span class="from">Start with ${q.a}/${q.b}</span>`;
+      UI.barCaption.textContent = `${q.a} out of ${q.b} parts ${q.a===1?'is':'are'} shaded.`;
+      UI.explainText.textContent = `This is the original fraction: ${q.a}/${q.b}.`;
+      buildBarModel(q.b, q.a);
+      UI.nextModelStepBtn.textContent = 'Next step ▶';
+      fractionStartTone();
+    }
+
+    if(modelStep === 1){
+      UI.phaseTag.textContent = 'Step 2 of 3';
+      UI.animatedLabel.innerHTML = `Divide the top and bottom by <span class="to">${q.k}</span>`;
+      UI.barCaption.textContent = q.isWhole
+        ? `All ${q.b} parts are shaded, so the fraction means one whole.`
+        : `Group the parts to make fewer, larger equal parts.`;
+      UI.explainText.textContent = `${q.a}/${q.b} ÷ ${q.k}/${q.k} means ${q.a} ÷ ${q.k} and ${q.b} ÷ ${q.k}.`;
+      buildBarModel(q.b, q.a);
+      UI.barModel.classList.add('changing');
+      UI.animatedLabel.classList.add('attention');
+      UI.barCaption.classList.add('attention');
+      document.querySelectorAll('.times, .arrow').forEach(el => el.classList.add('attention'));
+      UI.nextModelStepBtn.textContent = q.isWhole ? 'Show 1 ▶' : 'Show simplest form ▶';
+      fractionChangingTone();
+    }
+
+    if(modelStep === 2){
+      UI.phaseTag.textContent = 'Step 3 of 3';
+
+      if(q.isWhole){
+        UI.animatedLabel.innerHTML = `<span class="to">${q.a}/${q.b} simplifies to 1</span>`;
+        UI.barCaption.textContent = `The whole bar is shaded. That is 1 whole.`;
+        UI.explainText.textContent = `${q.a}/${q.b} = ${q.c}/${q.d}, and ${q.c}/${q.d} means one whole. The simplest way to write it is 1.`;
+        buildBarModel(1, 1);
+      }else{
+        UI.animatedLabel.innerHTML = `<span class="to">Simplest form is ${q.c}/${q.d}</span>`;
+        UI.barCaption.textContent = `${q.c} out of ${q.d} parts ${q.c===1?'is':'are'} shaded.`;
+        UI.explainText.textContent = `${q.a}/${q.b} = ${q.c}/${q.d}. The amount is the same, but the fraction is simpler.`;
+        buildBarModel(q.d, q.c);
+      }
+
+      UI.barModel.classList.add('changed');
+      UI.animatedLabel.classList.add('attention');
+      UI.nextModelStepBtn.textContent = 'Restart steps ↻';
+      fractionChangedTone();
+
+      modelTimers.push(setTimeout(()=> {
+        UI.barModel.classList.remove('changed');
+        UI.animatedLabel.classList.remove('attention');
+      }, 1000));
+    }
+  }
+
+  function showAnimatedModel(){
+    // Show the explanation, but let pupils control the pace with Next step.
+    startStepByStepModel();
+  }
+
+  function showExplanation(){
+    const q = currentQuestion;
+    UI.exA.textContent=q.a;
+    UI.exB.textContent=q.b;
+    UI.exC.textContent=q.c;
+    UI.exD.textContent=q.d;
+    UI.exFactorTop.textContent=q.k;
+    UI.exFactorBottom.textContent=q.k;
+
+    if(q.isWhole){
+      UI.changedText.textContent = `${q.a}/${q.b} simplifies to 1`;
+      UI.explainText.textContent = `${q.a}/${q.b} = ${q.c}/${q.d}, and ${q.c}/${q.d} means one whole. Write the simplest form as 1.`;
+    }else{
+      UI.changedText.textContent = `${q.a}/${q.b} simplifies to ${q.c}/${q.d}`;
+      UI.explainText.textContent = `${q.a}/${q.b} = ${q.c}/${q.d}. The amount is the same, but the fraction is simpler.`;
+    }
+
+    UI.explainBox.classList.add('show');
+    showAnimatedModel();
+  }
+
+  function cheatSolve(){
+    if(!currentQuestion) return;
+
+    const pass = prompt('Teacher password:');
+    if(pass !== '67'){
+      alert('Wrong password.');
+      return;
+    }
+
+    if(currentQuestion.isWhole){
+      UI.answerWhole.value = 1;
+    }else{
+      UI.answerNum.value = currentQuestion.answerNum;
+      UI.answerDen.value = currentQuestion.answerDen;
+    }
+
+    showExplanation();
+    UI.resultMsg.textContent = currentQuestion.isWhole
+      ? 'Teacher cheat solve used. Correct answer 1 filled in.'
+      : 'Teacher cheat solve used. Correct simplified fraction filled in.';
+    UI.resultMsg.className = 'resultMsg good';
+    UI.saveAlienBtn.classList.add('show');
+    successTone();
+  }
+
+  function checkAnswer(){
+    if(!currentQuestion) return;
+
+    showExplanation();
+
+    if(currentQuestion.isWhole){
+      const raw = UI.answerWhole.value.trim();
+      const val = Number(raw);
+
+      if(raw !== '' && Number.isInteger(val) && val === 1){
+        UI.resultMsg.textContent = 'Correct! A fraction like 6/6 means 1 whole. This alien can be saved.';
+        UI.resultMsg.className = 'resultMsg good';
+        UI.saveAlienBtn.classList.add('show');
+        successTone();
+      }else{
+        UI.resultMsg.textContent = 'Not yet. When the numerator and denominator are the same, the simplest form is 1.';
+        UI.resultMsg.className = 'resultMsg bad';
+        UI.saveAlienBtn.classList.remove('show');
+        wrongTone();
+      }
+      return;
+    }
+
+    const numRaw = UI.answerNum.value.trim();
+    const denRaw = UI.answerDen.value.trim();
+    const num = Number(numRaw);
+    const den = Number(denRaw);
+
+    if(numRaw !== '' && denRaw !== '' && Number.isInteger(num) && Number.isInteger(den) && num === currentQuestion.answerNum && den === currentQuestion.answerDen){
+      UI.resultMsg.textContent = 'Correct! This is the simplest form. This alien can be saved.';
+      UI.resultMsg.className = 'resultMsg good';
+      UI.saveAlienBtn.classList.add('show');
+      successTone();
+    }else{
+      UI.resultMsg.textContent = 'Not yet. Simplify fully and retry until correct.';
+      UI.resultMsg.className = 'resultMsg bad';
+      UI.saveAlienBtn.classList.remove('show');
+      wrongTone();
+    }
+  }
+
+  function playFirstRescueVideo(){
+    if(firstRescueVideoPlayed) return;
+    firstRescueVideoPlayed = true;
+    mode = 'video_pause';
+    UI.rescueVideoOverlay.style.display = 'flex';
+    UI.firstRescueVideo.currentTime = 0;
+    UI.firstRescueVideo.volume = 0.85;
+    UI.firstRescueVideo.play().catch(()=>{
+      // If the browser blocks the video, continue the mission.
+      closeFirstRescueVideo();
+    });
+  }
+
+  function closeFirstRescueVideo(){
+    UI.firstRescueVideo.pause();
+    UI.rescueVideoOverlay.style.display = 'none';
+    if(saved < 10){
+      mode = 'flying';
+    }
+    updateUI();
+  }
+
+  function beginBeam(){
+    if(!currentAlien) return; mode = 'beam'; beamTime = 0; ufo.userData.beam.visible = true; ufo.userData.beamGlow.intensity = 2.6; currentAlien.userData.marker.visible = false; updateUI(); playBeamSound();
+  }
+  function completeBeam(){
+    if(!currentAlien) return; currentAlien.userData.saved = true; currentAlien.visible = false; saved++; currentAlien = null; ufo.userData.beam.visible = false; ufo.userData.beamGlow.intensity = 0; updateUI();
+
+    if(saved === 1 && !firstRescueVideoPlayed){
+      playFirstRescueVideo();
+    }else if(saved >= 10){
+      beginEnding();
+    }else{
+      mode = 'flying';
+    }
+  }
+  function beginEnding(){
+    mode = 'ending_land'; endingTime = 0; pad.visible = true; ufo.userData.beam.visible = false; ufo.userData.beamGlow.intensity = 0;
+    for(const a of aliens){ a.visible = false; a.userData.marker.visible = false; }
+    uncleJoe.visible = false; updateUI();
+  }
+  function playFinalThanksVideo(){
+    mode = 'ending_video';
+    UI.finalThanksVideoOverlay.style.display = 'flex';
+    UI.finalThanksVideo.currentTime = 0;
+    UI.finalThanksVideo.volume = 1;
+
+    // Let the ending video be heard clearly.
+    if(UI.spaceAmbience){
+      UI.spaceAmbience.pause();
+    }
+
+    UI.finalThanksVideo.play().catch(()=>{
+      closeFinalThanksVideo();
+    });
+    updateUI();
+  }
+
+  function closeFinalThanksVideo(){
+    UI.finalThanksVideo.pause();
+    UI.finalThanksVideoOverlay.style.display = 'none';
+    mode = 'ending_thanks';
+    UI.endingThanks.style.display = 'flex';
+    confetti();
+    victoryTone();
+    updateUI();
+  }
+
+  function showThanks(){
+    uncleJoe.visible = true;
+    uncleJoe.position.set(0,0,2.8);
+    uncleJoe.rotation.y = Math.PI;
+    for(const a of endingAliens) a.visible = true;
+    playFinalThanksVideo();
+  }
+  function confetti(){
+    UI.confetti.innerHTML=''; const colors=['#53e6ff','#9b5cff','#72ff68','#ffe66d','#ff5d7a','#ffffff'];
+    for(let i=0;i<90;i++){ const s=document.createElement('span'); s.style.left=Math.random()*100+'vw'; s.style.background=colors[i%colors.length]; s.style.animationDelay=(Math.random()*0.7)+'s'; s.style.transform=`rotate(${Math.random()*360}deg)`; UI.confetti.appendChild(s); }
+    setTimeout(()=>UI.confetti.innerHTML='', 2600);
+  }
+
+  function playBeamSound(){
+    if(!UI.beamSound) return;
+    UI.beamSound.volume = 0.75;
+    UI.beamSound.currentTime = 0;
+    UI.beamSound.play().catch(()=>{
+      // Fallback if the browser blocks or cannot load the MP3.
+      beamTone();
+    });
+  }
+
+  function startAmbience(){
+    if(!UI.spaceAmbience) return;
+    UI.spaceAmbience.volume = 0.28;
+    UI.spaceAmbience.loop = true;
+    if(ambienceOn){
+      UI.spaceAmbience.play().then(()=>{
+        UI.soundBtn.textContent = '🔊 Ambience On';
+        UI.soundBtn.classList.remove('off');
+      }).catch(()=>{
+        UI.soundBtn.textContent = '▶ Start Ambience';
+        UI.soundBtn.classList.remove('off');
+      });
+    }
+  }
+
+  function toggleAmbience(){
+    if(!UI.spaceAmbience) return;
+    ambienceOn = !ambienceOn;
+
+    if(ambienceOn){
+      startAmbience();
+    }else{
+      UI.spaceAmbience.pause();
+      UI.soundBtn.textContent = '🔇 Ambience Off';
+      UI.soundBtn.classList.add('off');
+    }
+  }
+
+  let audioCtx = null;
+  function ctx(){ if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
+  function beep(freq=440, dur=.12, type='sine', gain=.05){ const ac=ctx(); const o=ac.createOscillator(); const g=ac.createGain(); o.type=type; o.frequency.value=freq; g.gain.value=gain; o.connect(g); g.connect(ac.destination); o.start(); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime+dur); o.stop(ac.currentTime+dur); }
+  function startTone(){ beep(330,.11,'triangle',.05); setTimeout(()=>beep(520,.16,'triangle',.05),120); }
+  function successTone(){ beep(660,.1,'sine',.06); setTimeout(()=>beep(880,.14,'sine',.06),90); }
+  function wrongTone(){ beep(180,.16,'sawtooth',.035); }
+  function beamTone(){ beep(420,.16,'triangle',.045); setTimeout(()=>beep(620,.22,'triangle',.045),130); }
+  function victoryTone(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,'triangle',.055),i*120)); }
+
+  // Sounds specifically for the fraction model transformation.
+  function fractionStartTone(){
+    beep(392,.10,'triangle',.035);
+  }
+  function fractionChangingTone(){
+    beep(520,.12,'triangle',.04);
+    setTimeout(()=>beep(610,.12,'triangle',.04),180);
+    setTimeout(()=>beep(700,.14,'triangle',.04),360);
+  }
+  function fractionChangedTone(){
+    beep(784,.12,'sine',.05);
+    setTimeout(()=>beep(988,.16,'sine',.05),140);
+  }
+
+  function animateIntro(dt){
+    introTime += dt; const t = introTime;
+    camera.position.lerp(new THREE.Vector3(0,5.3,10.5), .04); camera.lookAt(0,1.4,0);
+    pad.visible = true; uncleJoe.visible = true; ufo.visible = true; for(const a of aliens){ a.visible = false; a.userData.marker.visible = false; }
+
+    if(mode === 'opening_walk'){
+      const p = Math.min(1, t/2.9);
+
+      // Uncle Joe walks to the visible chamber door at the front of the UFO.
+      uncleJoe.visible = true;
+      uncleJoe.scale.setScalar(1.1);
+      uncleJoe.position.x = -8 + p*6.9;
+      uncleJoe.position.z = 2.18;
+      uncleJoe.position.y = 0;
+      uncleJoe.rotation.y = Math.PI/2;
+
+      const swing = Math.sin(t*9)*.25, parts = uncleJoe.userData.parts;
+      parts.arm1.rotation.x=swing; parts.arm2.rotation.x=-swing; parts.leg1.rotation.x=-swing; parts.leg2.rotation.x=swing;
+
+      // Open the door before he reaches it.
+      if(p > .52){
+        ufo.userData.doorPivot.rotation.x = -Math.min(Math.PI*.62, (p-.52)/.48*Math.PI*.62);
+      }
+
+      if(p >= 1){ mode='opening_enter'; introTime=0; }
+    } else if(mode === 'opening_enter'){
+      const p = Math.min(1, t/1.35);
+      const parts = uncleJoe.userData.parts;
+      parts.arm1.rotation.x=0; parts.arm2.rotation.x=0; parts.leg1.rotation.x=0; parts.leg2.rotation.x=0;
+
+      // He walks into the chamber doorway at full size, then disappears inside.
+      uncleJoe.position.x = -1.1 + p*1.1;
+      uncleJoe.position.z = 2.18 - p*.62;
+      uncleJoe.position.y = p*.72;
+      uncleJoe.rotation.y = Math.PI;
+      uncleJoe.scale.setScalar(1.1);
+      ufo.userData.doorPivot.rotation.x = -Math.PI*.62;
+
+      if(p > .86){
+        uncleJoe.visible = false;
+      }
+
+      if(p >= 1){
+        uncleJoe.visible = false;
+        uncleJoe.scale.setScalar(1.1);
+        mode='opening_lift';
+        introTime=0;
+      }
+    } else if(mode === 'opening_lift'){
+      const p = Math.min(1, t/2.4);
+      uncleJoe.visible = false;
+      ufo.userData.doorPivot.rotation.x = -Math.PI*.62*(1-p);
+      ufo.position.y = 1.65 + p*8.2; ufo.position.z = -p*8; ufo.rotation.z = Math.sin(t*8)*.03;
+      camera.position.lerp(new THREE.Vector3(0,7.2,15), .03);
+      if(p >= 1) setupExploration();
+    }
+  }
+
+  function updateFlight(dt){
+    const speed = 13; let dx=0, dz=0;
+    if(keys['w'] || keys['arrowup'] || mobileKeys.up) dz -= 1;
+    if(keys['s'] || keys['arrowdown'] || mobileKeys.down) dz += 1;
+    if(keys['a'] || keys['arrowleft'] || mobileKeys.left) dx -= 1;
+    if(keys['d'] || keys['arrowright'] || mobileKeys.right) dx += 1;
+    const len = Math.hypot(dx,dz);
+    if(len > 0){ dx/=len; dz/=len; ufo.position.x += dx*speed*dt; ufo.position.z += dz*speed*dt; ufo.position.x = THREE.MathUtils.clamp(ufo.position.x,-48,48); ufo.position.z = THREE.MathUtils.clamp(ufo.position.z,-48,48); const targetYaw = Math.atan2(dx, dz); ufo.rotation.y = THREE.MathUtils.lerp(ufo.rotation.y, targetYaw, .08); ufo.rotation.z = THREE.MathUtils.lerp(ufo.rotation.z, -dx*.12, .08); }
+    else ufo.rotation.z = THREE.MathUtils.lerp(ufo.rotation.z, 0, .06);
+    ufo.position.y = 6 + Math.sin(performance.now()*.003)*.18; blueLight.position.copy(ufo.position);
+
+    let nearest=null, nearestD=999;
+    for(const a of aliens){ if(a.userData.saved) continue; const d=Math.hypot(ufo.position.x-a.position.x, ufo.position.z-a.position.z); if(d < nearestD){ nearestD=d; nearest=a; } }
+    if(nearest && nearestD < 2.3){ currentAlien = nearest; UI.promptBox.style.display = 'block'; UI.promptText.innerHTML = `<strong>Alien found!</strong> Answer 1 question to save Alien ${nearest.userData.index+1}.`; }
+    else { currentAlien = null; UI.promptBox.style.display = 'none'; }
+
+    camera.position.lerp(new THREE.Vector3(ufo.position.x,18,ufo.position.z+16), .06); camera.lookAt(ufo.position.x,ufo.position.y,ufo.position.z);
+  }
+
+  function updateBeam(dt){
+    beamTime += dt; if(!currentAlien){ completeBeam(); return; }
+    const p = Math.min(1, beamTime/2.15); const target = new THREE.Vector3(ufo.position.x, ufo.position.y-1.0, ufo.position.z);
+    currentAlien.position.lerp(target, .035 + p*.03); currentAlien.scale.setScalar(1 - p*.55); currentAlien.rotation.y += dt*4; ufo.userData.beam.material.opacity = .16 + Math.sin(beamTime*18)*.06; ufo.userData.beamGlow.intensity = 2.2 + Math.sin(beamTime*10)*.8;
+    camera.position.lerp(new THREE.Vector3(ufo.position.x,11,ufo.position.z+12), .04); camera.lookAt(ufo.position.x,3,ufo.position.z);
+    if(p >= 1){ currentAlien.scale.setScalar(1); completeBeam(); }
+  }
+
+  function updateEnding(dt){
+    endingTime += dt; const p = Math.min(1, endingTime/3.5);
+    ufo.position.lerp(new THREE.Vector3(0,1.65,0), .025 + p*.015); ufo.rotation.y = THREE.MathUtils.lerp(ufo.rotation.y, Math.PI, .025); ufo.rotation.z = THREE.MathUtils.lerp(ufo.rotation.z, 0, .04);
+    camera.position.lerp(new THREE.Vector3(0,6.5,12), .035); camera.lookAt(0,1.5,0);
+    if(p >= .95) showThanks();
+  }
+
+  function animateWorldObjects(time){
+    stars.rotation.y += .0004;
+    for(const a of aliens){ if(!a.visible) continue; a.userData.float += .04; a.position.y = Math.sin(a.userData.float)*.08; const parts=a.userData.parts; if(parts){ parts.arm1.rotation.z = .78 + Math.sin(time*4 + a.userData.index)*.22; parts.arm2.rotation.z = -.78 - Math.sin(time*4 + a.userData.index)*.22; } if(a.userData.marker){ a.userData.marker.rotation.z += .025; } }
+    for(let i=0;i<endingAliens.length;i++){ const a=endingAliens[i]; if(!a.visible) continue; a.position.y = Math.sin(time*3+i)*.05; a.rotation.y += Math.sin(time*2+i)*.002; }
+  }
+
+  function loop(){
+    const dt = Math.min(clock.getDelta(), .05), time = performance.now()/1000;
+    if(mode.startsWith('opening')) animateIntro(dt);
+    else if(mode === 'flying') updateFlight(dt);
+    else if(mode === 'beam') updateBeam(dt);
+    else if(mode === 'ending_land') updateEnding(dt);
+    else if(mode === 'quiz' && currentAlien){ camera.position.lerp(new THREE.Vector3(ufo.position.x,10,ufo.position.z+11), .03); camera.lookAt(currentAlien.position.x,1.5,currentAlien.position.z); }
+    if(mode === 'opening_idle'){ camera.position.lerp(new THREE.Vector3(0,5.3,10.5), .04); camera.lookAt(0,1.4,0); ufo.position.y = 1.65 + Math.sin(time*2)*.08; uncleJoe.visible = true; }
+    animateWorldObjects(time); updateUI(); renderer.render(scene, camera); requestAnimationFrame(loop);
+  }
+
+  updateUI(); loop();
+})();
+</script>
+</body>
+</html>
