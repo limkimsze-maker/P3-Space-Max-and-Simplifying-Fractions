@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Uncle Joe and the Simplified Fractions Rescue</title>
+  <title>Space Max and Simplified Fractions</title>
   <style>
     :root{
       --cyan:#53e6ff;
@@ -136,6 +136,7 @@
       border:2px solid rgba(83,230,255,.45); border-radius:18px; padding:10px 12px; outline:none;
     }
     input[type=number]:focus{box-shadow:0 0 20px rgba(83,230,255,.25)}
+
     .simplifyAnswer{
       display:grid;
       grid-template-rows:1fr 4px 1fr;
@@ -338,6 +339,52 @@
     .confetti span{position:absolute; top:-20px; width:10px; height:16px; border-radius:3px; animation:fall 1.8s linear forwards}
     @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
 
+
+    .dialogueBox{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      width:min(760px,94vw);
+      z-index:15;
+      display:none;
+      pointer-events:auto;
+      border:1px solid rgba(83,230,255,.45);
+      background:linear-gradient(180deg,rgba(7,18,45,.95),rgba(3,9,25,.98));
+      box-shadow:0 0 28px rgba(83,230,255,.18);
+      border-radius:22px;
+      padding:14px;
+      backdrop-filter:blur(8px);
+    }
+    .dialogueSpeaker{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(255,230,109,.14);
+      border:1px solid rgba(255,230,109,.38);
+      color:#fff3a2;
+      font-weight:950;
+      margin-bottom:8px;
+    }
+    .dialogueText{
+      color:#eafcff;
+      font-size:clamp(16px,2.8vw,21px);
+      line-height:1.35;
+      font-weight:850;
+      margin-bottom:12px;
+    }
+    .dialogueNextBtn{
+      float:right;
+      border:0;
+      border-radius:16px;
+      padding:10px 16px;
+      font-weight:950;
+      cursor:pointer;
+      color:#061c28;
+      background:linear-gradient(180deg,#8ff8ff,#39d7ff);
+      box-shadow:0 4px 0 #147b91;
+    }
+
     @media (max-width:720px){
       .topbar{top:5px;left:6px;right:6px;gap:5px}
       .badge{padding:7px 8px;font-size:13px;min-height:34px}
@@ -394,6 +441,563 @@
       .stepText,.explainText,.animatedLabel,.barCaption{font-size:14px}
       .resultMsg{font-size:16px}
     }
+  
+
+    /* ===== Space Max coherent series skin: cover, HUD, dialogue, buttons ===== */
+    :root{
+      --cyan:#72f7ff;
+      --cyan2:#1fc9ff;
+      --gold:#ffe36d;
+      --green:#65ff9d;
+      --purple:#b070ff;
+      --panel:rgba(4,10,32,.86);
+      --panel2:rgba(8,18,52,.94);
+      --line:rgba(114,247,255,.42);
+    }
+
+    .bigBtn,.smallBtn,.checkBtn,.nextBtn,.coverBtn,.coverHelpBtn,.dialogueActions button,.soundBtn,.promptBox button{
+      font-family:inherit;
+      font-weight:1000;
+      cursor:pointer;
+      touch-action:manipulation;
+    }
+
+    .topbar{
+      position:fixed;
+      top:calc(8px + env(safe-area-inset-top,0px));
+      left:50%;
+      right:auto;
+      transform:translateX(-50%);
+      width:min(980px,calc(100vw - 16px));
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      flex-wrap:wrap;
+      padding:9px 12px;
+      border-radius:18px;
+      border:2px solid rgba(114,247,255,.48);
+      background:linear-gradient(180deg,rgba(8,24,58,.82),rgba(2,6,24,.84));
+      box-shadow:0 8px 30px rgba(0,0,0,.48),inset 0 0 24px rgba(114,247,255,.08);
+      backdrop-filter:blur(6px);
+      pointer-events:auto;
+    }
+    .badge{
+      padding:0;
+      border:0;
+      background:transparent;
+      box-shadow:none;
+      backdrop-filter:none;
+      min-height:auto;
+      color:#ddfdff;
+      text-shadow:0 0 12px rgba(114,247,255,.55);
+      font-weight:1000;
+    }
+    .badge .small{color:#bdf8ff;font-size:12px;font-weight:900;}
+    .progressOuter{width:min(220px,32vw);height:9px;border-radius:999px;background:rgba(255,255,255,.14);}
+    .progressInner{background:linear-gradient(90deg,var(--green),var(--cyan));box-shadow:0 0 16px rgba(101,255,157,.38);}
+    .soundBtn{
+      top:calc(78px + env(safe-area-inset-top,0px));
+      right:12px;
+      min-height:40px;
+      padding:9px 12px;
+      border-radius:16px;
+      color:#eaffff;
+      background:linear-gradient(180deg,rgba(20,48,92,.96),rgba(6,12,35,.96));
+      border:1px solid rgba(114,247,255,.35);
+      box-shadow:0 5px 0 #081228,0 12px 22px rgba(0,0,0,.32);
+      font-size:13px;
+    }
+    .promptBox{
+      bottom:calc(104px + env(safe-area-inset-bottom,0px));
+      width:min(460px,92vw);
+      border-radius:18px;
+      background:rgba(2,7,28,.78);
+      border:1px solid rgba(255,227,109,.48);
+      box-shadow:0 8px 24px rgba(0,0,0,.38),0 0 16px rgba(255,227,109,.13);
+      font-size:14px;
+      font-weight:900;
+    }
+    .promptBox button{
+      color:#06142b;
+      background:linear-gradient(180deg,#fff5a8,#ffb23e);
+      border-radius:14px;
+      box-shadow:0 5px 0 #8a5209;
+    }
+
+    .screen{
+      position:fixed;
+      inset:0;
+      z-index:70;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:clamp(6px,1.6vmin,14px);
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 18% 12%,rgba(114,247,255,.18),transparent 30%),
+        radial-gradient(circle at 80% 24%,rgba(176,112,255,.17),transparent 28%),
+        linear-gradient(180deg,rgba(3,7,26,.96),rgba(3,3,18,.98));
+      color:#eaffff;
+    }
+    .coverCard{
+      width:min(760px,calc(100vw - 12px));
+      max-height:calc(100dvh - 12px);
+      overflow:hidden;
+      border:3px solid rgba(114,247,255,.72);
+      border-radius:clamp(18px,4vmin,28px);
+      padding:clamp(10px,2.2vmin,20px);
+      background:
+        radial-gradient(circle at 50% 0,rgba(114,247,255,.14),transparent 38%),
+        linear-gradient(180deg,rgba(11,31,73,.94),rgba(3,7,25,.96));
+      box-shadow:0 26px 80px rgba(0,0,0,.72),inset 0 0 40px rgba(114,247,255,.09);
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:clamp(5px,1.1vmin,10px);
+    }
+    .coverBadge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      margin:0;
+      padding:5px 10px;
+      border-radius:999px;
+      background:rgba(114,247,255,.13);
+      border:1px solid rgba(114,247,255,.42);
+      color:#c8fbff;
+      font-weight:1000;
+      font-size:clamp(11px,1.8vmin,14px);
+    }
+    .coverTitle{
+      margin:0;
+      max-width:12.5em;
+      font-size:clamp(21px,5.4vmin,44px);
+      line-height:1;
+      color:#eaffff;
+      text-shadow:0 4px 0 #092039,0 0 22px rgba(114,247,255,.36);
+      font-weight:1000;
+    }
+    .coverSubtitle{
+      margin:0;
+      max-width:650px;
+      color:#c7f9ff;
+      font-size:clamp(12px,2vmin,16px);
+      line-height:1.18;
+      font-weight:800;
+    }
+    .coverStory{
+      margin:0;
+      width:min(650px,100%);
+      text-align:left;
+      background:rgba(0,0,0,.26);
+      border:1px solid rgba(114,247,255,.28);
+      border-radius:22px;
+      padding:clamp(7px,1.3vmin,11px) clamp(8px,1.7vmin,14px);
+      color:#eaffff;
+      line-height:1.22;
+      font-size:clamp(11px,1.75vmin,14px);
+      font-weight:800;
+      max-height:18dvh;
+      overflow:hidden;
+    }
+    .coverStory p{margin:0 0 4px;}
+    .coverStory p:last-child{margin-bottom:0;}
+    .howToDetails{width:min(650px,100%);margin:0;}
+    .coverHelpBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:32px;
+      padding:6px 10px;
+      border-radius:999px;
+      color:#eaffff;
+      background:linear-gradient(180deg,rgba(20,48,92,.96),rgba(6,12,35,.96));
+      border:1px solid rgba(114,247,255,.42);
+      box-shadow:0 5px 0 #081228,0 12px 22px rgba(0,0,0,.22);
+      font-size:12px;
+    }
+    .howPanel{
+      width:min(650px,100%);
+      margin:0 auto;
+      padding:7px 9px;
+      border-radius:16px;
+      background:rgba(0,0,0,.24);
+      border:1px solid rgba(114,247,255,.28);
+      color:#eaffff;
+      font-size:11px;
+      line-height:1.2;
+      font-weight:850;
+      text-align:left;
+      max-height:20dvh;
+      overflow:auto;
+      touch-action:pan-y;
+    }
+    .missionGrid{
+      display:grid;
+      width:min(650px,100%);
+      margin:0;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:5px;
+    }
+    .missionItem{
+      min-height:auto;
+      border-radius:16px;
+      padding:5px 4px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(114,247,255,.24);
+      color:#eaffff;
+      font-weight:1000;
+      font-size:clamp(10px,1.7vmin,12px);
+      line-height:1.08;
+      display:block;
+    }
+    .missionItem .big{
+      display:block;
+      font-size:clamp(16px,3.4vmin,24px);
+      margin-bottom:0;
+    }
+    .coverActions{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:clamp(8px,1.6vmin,10px);
+      flex-wrap:wrap;
+      margin:0;
+    }
+    .coverBtn{
+      min-height:clamp(38px,6.4vmin,48px);
+      padding:8px 14px;
+      font-size:clamp(13px,2.1vmin,17px);
+      border-radius:16px;
+      color:#06142b;
+      background:linear-gradient(180deg,#fff5a8,#ffb23e);
+      box-shadow:0 6px 0 #8a5209,0 12px 24px rgba(0,0,0,.28);
+    }
+    .secondaryBtn{
+      color:#eaffff;
+      background:linear-gradient(180deg,rgba(20,48,92,.96),rgba(6,12,35,.96));
+      border:1px solid rgba(114,247,255,.35);
+      box-shadow:0 5px 0 #081228,0 12px 22px rgba(0,0,0,.32);
+    }
+
+    .dialogueBox{
+      position:fixed;
+      inset:0;
+      z-index:58;
+      display:none;
+      background:transparent;
+      pointer-events:none;
+      transform:none;
+      width:auto;
+      padding:0;
+      border:0;
+      box-shadow:none;
+      backdrop-filter:none;
+    }
+    .dialogueCard{
+      position:fixed;
+      left:50%;
+      top:72%;
+      transform:translateX(-50%);
+      width:min(1180px,calc(100vw - 24px));
+      min-height:46px;
+      height:auto;
+      padding:8px 12px;
+      border-radius:20px;
+      border:2px solid rgba(255,227,109,.82);
+      background:linear-gradient(180deg,rgba(9,24,58,.94),rgba(4,9,27,.94));
+      box-shadow:0 8px 22px rgba(0,0,0,.45),0 0 16px rgba(255,227,109,.16),inset 0 0 18px rgba(114,247,255,.06);
+      pointer-events:auto;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      white-space:normal;
+      animation:dialoguePopSmall .16s ease-out;
+      text-align:left;
+    }
+    @keyframes dialoguePopSmall{
+      from{opacity:0;transform:translateX(-50%) translateY(8px) scale(.98)}
+      to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+    }
+    .speakerRow{
+      margin:0;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:6px;
+      flex:0 0 auto;
+      align-self:center;
+    }
+    .speakerDot{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(180deg,#ffd7b0,#ff8a53);
+      box-shadow:0 0 14px rgba(255,227,109,.22);
+      font-size:15px;
+    }
+    .dialogueSpeaker{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      margin:0;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:13px;
+      white-space:nowrap;
+      font-weight:1000;
+      box-shadow:0 0 14px rgba(255,227,109,.22);
+      border:0;
+    }
+    .dialogueSpeaker.sim{
+      background:linear-gradient(180deg,#ffd7f6,#ff82d8);
+      color:#35102e;
+    }
+    .dialogueSpeaker.max{
+      background:linear-gradient(180deg,#bffbff,#72f7ff);
+      color:#06142b;
+    }
+    .dialogueText{
+      flex:1 1 auto;
+      min-width:0;
+      min-height:0;
+      margin:0;
+      color:#f3feff;
+      font-size:clamp(13px,1.55vw,17px);
+      line-height:1.25;
+      font-weight:1000;
+      text-shadow:0 1px 0 rgba(0,0,0,.35);
+      white-space:normal;
+      overflow:visible;
+      text-overflow:clip;
+      padding:0 4px;
+    }
+    .dialogueReward{
+      flex:0 0 auto;
+      margin:0;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(101,255,157,.14);
+      border:1px solid rgba(101,255,157,.55);
+      color:#d8ffe8;
+      font-size:12px;
+      font-weight:1000;
+      white-space:nowrap;
+    }
+    .dialogueActions{
+      margin:0 0 0 4px;
+      display:flex;
+      justify-content:flex-end;
+      gap:6px;
+      flex:0 0 auto;
+      align-self:center;
+    }
+    .dialogueActions button{
+      min-height:30px;
+      padding:5px 10px;
+      font-size:12px;
+      border-radius:999px;
+      white-space:nowrap;
+      color:#eaffff;
+      background:linear-gradient(180deg,rgba(20,48,92,.96),rgba(6,12,35,.96));
+      border:1px solid rgba(114,247,255,.35);
+      box-shadow:0 5px 0 #081228,0 12px 22px rgba(0,0,0,.32);
+      float:none;
+    }
+    #dialogueNextBtn{display:none!important;}
+
+    .thanksCard{
+      border:3px solid rgba(114,247,255,.75);
+      border-radius:28px;
+      background:linear-gradient(180deg,rgba(8,29,72,.97),rgba(3,7,26,.98));
+      box-shadow:0 22px 70px rgba(0,0,0,.7),inset 0 0 35px rgba(114,247,255,.10);
+    }
+    .thanksCard h1{text-shadow:0 0 32px rgba(101,255,157,.48);}
+
+    @media(max-width:760px){
+      .topbar{gap:6px;padding:8px 9px;text-align:center;}
+      .badge{width:100%;justify-content:center;font-size:12px;}
+      .soundBtn{top:calc(94px + env(safe-area-inset-top,0px));right:8px;font-size:11px;padding:6px 8px;min-height:34px;}
+      .dialogueCard{width:calc(100vw - 10px);max-width:calc(100vw - 10px);padding:7px 8px;gap:7px;border-radius:16px;align-items:flex-start;top:68%;}
+      .speakerRow,.dialogueActions{align-self:flex-start;}
+      .dialogueText{font-size:12px;line-height:1.2;padding-top:4px;}
+      .dialogueSpeaker{font-size:11px;padding:4px 7px;min-height:26px;}
+      .speakerDot{width:24px;height:24px;font-size:13px;}
+      .dialogueActions button{font-size:11px;min-height:28px;padding:4px 7px;}
+      .dialogueReward{font-size:10px;padding:5px 7px;}
+      .missionGrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+    @media(max-width:520px){
+      .coverCard{gap:5px;padding:9px 8px;}
+      .coverActions{gap:6px;}
+      .coverBtn{flex:1 1 130px;min-height:38px;padding:7px 8px;}
+      .coverStory{max-height:14dvh;}
+      .dialogueCard{gap:5px;padding:6px;}
+      .dialogueText{font-size:11px;line-height:1.18;}
+      .dialogueSpeaker{font-size:10px;padding:4px 6px;}
+    }
+    @media(max-height:620px){
+      .coverBadge{display:none;}
+      .coverStory{display:none;}
+      .missionItem .big{display:none;}
+      .howToDetails{display:none;}
+      .coverCard{justify-content:center;}
+    }
+    @media(max-height:460px){
+      .missionGrid{display:none;}
+      .coverTitle{font-size:clamp(18px,8vh,32px);}
+      .coverSubtitle{font-size:11px;}
+    }
+
+  
+
+    /* ===== Fix: keep quiz bottom buttons visible on all screen heights ===== */
+    .quizModal{
+      align-items:center;
+      justify-content:center;
+      padding:6px;
+    }
+    .quizCard{
+      max-height:calc(100dvh - 12px) !important;
+      overflow-y:auto !important;
+      overflow-x:hidden !important;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior:contain;
+      touch-action:pan-y;
+      padding-bottom:6px;
+      scrollbar-width:thin;
+    }
+    .quizHead,
+    .questionPanel,
+    .answerRow,
+    .resultMsg,
+    .modalActions{
+      flex-shrink:0;
+    }
+    .quizHead{gap:6px;}
+    .quizTitle{font-size:clamp(17px,2.65vw,28px);}
+    .pill{padding:7px 11px;}
+    .questionPanel{
+      padding:8px;
+      gap:8px;
+    }
+    .frac{
+      min-width:98px;
+      padding:8px 12px;
+      font-size:36px;
+      gap:6px;
+    }
+    .barLine{width:62px;}
+    .eq{font-size:46px;}
+    .simplifyAnswer{
+      padding:6px 10px;
+      min-width:124px;
+      gap:4px;
+    }
+    .simplifyAnswer input{
+      width:82px;
+      padding:5px 7px;
+      font-size:20px;
+    }
+    .answerBar{width:76px;}
+    .wholeAnswer{
+      padding:7px 11px;
+    }
+    .wholeAnswer input{
+      width:86px;
+      padding:7px 9px;
+      font-size:21px;
+    }
+    .resultMsg{
+      min-height:20px;
+      font-size:clamp(15px,2.1vw,18px);
+    }
+    .explain.show{
+      display:block;
+      max-height:clamp(180px,32dvh,285px);
+      overflow-y:auto;
+      overflow-x:hidden;
+      touch-action:pan-y;
+      -webkit-overflow-scrolling:touch;
+    }
+    .explainHeader{
+      gap:6px;
+      margin-bottom:4px;
+    }
+    .modelTitle{font-size:clamp(17px,2.2vw,20px);}
+    .replayBtn,.phaseTag{padding:5px 9px;font-size:12px;}
+    .changeLine{gap:9px;}
+    .miniFrac{font-size:23px;}
+    .times{font-size:19px;}
+    .arrow{font-size:26px;}
+    .barModel{height:38px;}
+    .animatedLabel,.barCaption,.stepText,.explainText{font-size:clamp(13px,1.8vw,16px);}
+    .modalActions{
+      position:sticky;
+      bottom:-1px;
+      z-index:4;
+      margin:0 -6px -6px;
+      padding:8px 6px 9px;
+      background:linear-gradient(180deg,rgba(4,10,25,.18),rgba(4,10,25,.96) 30%,rgba(4,10,25,.99));
+      border-top:1px solid rgba(83,230,255,.18);
+      backdrop-filter:blur(6px);
+    }
+    .smallBtn,.nextBtn{
+      padding:10px 14px;
+      min-height:40px;
+    }
+
+    @media (max-height:760px){
+      .quizCard{gap:6px;padding:10px 10px 6px;}
+      .questionPanel{width:min(100%,720px);}
+      .fracBlock{gap:5px;}
+      .label{font-size:12px;padding:5px 9px;}
+      .frac{min-width:86px;font-size:30px;padding:7px 10px;}
+      .barLine{width:54px;height:3px;}
+      .eq{font-size:38px;}
+      .answerRow{gap:8px;}
+      .checkBtn{padding:10px 16px;font-size:18px;}
+      .explain.show{max-height:clamp(150px,29dvh,240px);}
+      .explain{padding:8px;}
+      .explainGrid{gap:7px;}
+      .barModel{height:34px;}
+      .modalActions{padding:7px 6px 8px;}
+    }
+
+    @media (max-width:720px){
+      .quizCard{max-height:calc(100dvh - 8px) !important;}
+      .questionPanel{grid-template-columns:1fr auto 1fr;}
+      .explain.show{max-height:34dvh;}
+      .modalActions{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));}
+    }
+
+    @media (max-width:520px), (max-height:620px){
+      .quizTitle{font-size:16px;}
+      .pill{font-size:11px;padding:5px 8px;}
+      .questionPanel{padding:6px;gap:5px;}
+      .frac{min-width:76px;font-size:26px;padding:6px 8px;border-radius:14px;}
+      .barLine{width:46px;height:3px;}
+      .eq{font-size:32px;}
+      .simplifyAnswer{min-width:104px;padding:5px 8px;}
+      .simplifyAnswer input{width:68px;font-size:18px;padding:4px 6px;}
+      .answerBar{width:62px;height:3px;}
+      .checkBtn{font-size:16px;padding:9px 12px;}
+      .explain.show{max-height:30dvh;}
+      .modelTitle{font-size:16px;}
+      .replayBtn,.phaseTag{font-size:11px;padding:4px 7px;}
+      .miniFrac{font-size:20px;}
+      .times{font-size:17px;}
+      .arrow{font-size:22px;}
+      .barModel{height:30px;}
+      .smallBtn,.nextBtn{font-size:14px;min-height:36px;padding:8px 10px;}
+    }
+
   </style>
 </head>
 <body>
@@ -404,39 +1008,76 @@
     <div class="badge">
       <span>🛸</span>
       <div>
-        <div>Simplified Fractions Rescue</div>
+        <div>Space Max: Simplified Fractions</div>
         <div class="small" id="missionState">Opening mission</div>
       </div>
     </div>
     <div class="badge">
       <span>👽</span>
-      <div>Aliens Saved: <span id="savedCount">0</span>/10</div>
+      <div>Friends Saved: <span id="savedCount">0</span>/10</div>
       <div class="progressOuter"><div class="progressInner" id="progressInner"></div></div>
     </div>
   </div>
-  <button class="soundBtn" id="soundBtn" type="button">🔊 Ambience On</button>
+  <button class="soundBtn" id="soundBtn" type="button">🔊 Sound On</button>
   <div class="promptBox" id="promptBox">
-    <span id="promptText">Alien found!</span>
+    <span id="promptText">Friend found!</span>
     <button id="rescueBtn">Answer Question</button>
+  </div>
+</div>
+
+
+<div class="dialogueBox" id="dialogueBox" aria-live="polite">
+  <div class="dialogueCard">
+    <div class="speakerRow">
+      <div id="dialogueDot" class="speakerDot">🛸</div>
+      <div class="dialogueSpeaker sim" id="dialogueSpeaker">Sim</div>
+    </div>
+    <div class="dialogueText" id="dialogueText"></div>
+    <div id="dialogueReward" class="dialogueReward" style="display:none;">Rocket Part: Fuel Purifier</div>
+    <div class="dialogueActions">
+      <button id="dialogueReplayVoiceBtn" type="button">🔊 Repeat</button>
+      <button id="dialogueSkipBtn" type="button">Skip</button>
+      <button class="dialogueNextBtn" id="dialogueNextBtn" type="button">Next ▶</button>
+    </div>
   </div>
 </div>
 
 <audio id="spaceAmbience" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Addition-of-Unlike-Fractions/26fdebdfbc92c85d8f2a367969f3b4f4017c33d8/placidplace-spaceship-ambience-with-effects-21420.mp3" loop preload="auto"></audio>
 <audio id="beamSound" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Equivalent-Fractions/4b4ac8a0836a07931dd0ae24e328fc47e4dcba03/yodguard-short-energy-beam-shot-3-482517.mp3" preload="auto"></audio>
+<audio id="thankYouAudio" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Space-Max-and-Equivalent-Fractions/121f9197fcaf51940e4337c7da56a12f3d2004e6/freesound_community-thank-you-99932%20(1).mp3" preload="auto"></audio>
 
 <div class="screen" id="startScreen">
-  <div class="card">
-    <h1>Uncle Joe and the Simplified Fractions Rescue</h1>
-    <h2>Save 10 aliens by simplifying fractions</h2>
-    <p>Uncle Joe walks into the UFO disc, disappears inside it, and flies across a barren planet. Steer the UFO above each alien and simplify one fraction to save it.</p>
-    <div class="missionGrid">
-      <div class="missionItem"><span>🚶‍♂️</span><span>Walk into UFO</span></div>
-      <div class="missionItem"><span>🛸</span><span>Fly across planet</span></div>
-      <div class="missionItem"><span>👽</span><span>Simplify to save</span></div>
+  <div class="coverCard">
+    <div class="coverBadge">🛸 Space Rescue Mission</div>
+    <h1 class="coverTitle">Space Max and Simplified Fractions</h1>
+    <p class="coverSubtitle">Help Sim rescue 10 friends floating in the sea by solving simplified-fraction questions before each UFO save.</p>
+
+    <div class="coverStory compactStory">
+      <p>Space Max lands near the sea and meets Sim, who is anxious because 10 of her friends' boat has capsized.</p>
+      <p>Sim asks Space Max to board her UFO, fly above each friend in a life jacket, and answer one simplifying-fraction question before every rescue.</p>
+      <p>If Space Max saves all 10 friends, Sim will give him the <b>Fuel Purifier</b> for his rocket back to Earth.</p>
     </div>
-    <p><b>Controls:</b> WASD or Arrow Keys. On phones, use the direction buttons.</p>
-    <p><b>Math rule:</b> Denominators are never bigger than 12. If the numerator and denominator are the same, the answer is 1. Retry until correct. After every attempt, the model first shows the original fraction and then changes it into its simplest form.</p>
-    <button class="bigBtn" id="startBtn">Start Mission</button>
+
+    <div class="howToDetails">
+      <button id="howBtnCover" class="coverHelpBtn" type="button">How to play</button>
+      <div id="howPanel" class="howPanel" style="display:none;">
+        <p><b>Move:</b> Use WASD / arrow keys, or the on-screen buttons on mobile.</p>
+        <p><b>Mission rule:</b> Save all 10 friends. Answer 1 simplified-fraction question before each rescue beam.</p>
+        <p><b>Simplifying hint:</b> Divide the numerator and denominator by the same number to make the fraction smaller but equal.</p>
+      </div>
+    </div>
+
+    <div class="missionGrid">
+      <div class="missionItem"><span class="big">💬</span>Talk to Sim</div>
+      <div class="missionItem"><span class="big">🛸</span>Board UFO</div>
+      <div class="missionItem"><span class="big">🧮</span>Simplified fractions</div>
+      <div class="missionItem"><span class="big">⚙️</span>Get Fuel Purifier</div>
+    </div>
+
+    <div class="coverActions">
+      <button class="coverBtn" id="startBtn" type="button">Start Mission</button>
+      <button class="coverBtn secondaryBtn" id="goUfoBtn" type="button">Go Straight to UFO</button>
+    </div>
   </div>
 </div>
 
@@ -444,7 +1085,7 @@
   <div class="quizCard">
     <div class="quizHead">
       <div class="quizTitle">Rescue Question <span id="questionNum">1</span> of 10</div>
-      <div class="pill">Denominator ≤ 12</div>
+      <div class="pill">Simplify to lowest terms</div>
     </div>
 
     <div class="questionPanel">
@@ -522,7 +1163,7 @@
     <div class="modalActions">
       <button class="smallBtn" id="tryAgainBtn">Try Again</button>
       <button class="smallBtn" id="cheatSolveBtn">Teacher Cheat Solve</button>
-      <button class="nextBtn" id="saveAlienBtn">Beam Up Alien</button>
+      <button class="nextBtn" id="saveAlienBtn">Beam Up Friend</button>
     </div>
   </div>
 </div>
@@ -538,15 +1179,15 @@
 <div class="rescueVideoOverlay" id="rescueVideoOverlay">
   <div class="rescueVideoBox">
     <video id="firstRescueVideo" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Equivalent-Fractions/c0e24dea3de2cfeaf92b5cec51a7cfd78f0f7455/220638_medium.mp4" preload="auto" playsinline></video>
-    <div class="rescueVideoText">First alien rescued!</div>
+    <div class="rescueVideoText">First friend rescued!</div>
     <button class="skipVideoBtn" id="skipVideoBtn" type="button">Skip video</button>
   </div>
 </div>
 
 <div class="rescueVideoOverlay finalVideoOverlay" id="finalThanksVideoOverlay">
   <div class="rescueVideoBox">
-    <video id="finalThanksVideo" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Uncle-Joe-and-Equivalent-Fractions/6615a9e42b09b1fb23fdcc554372cc1497b09e9c/ten_aliens_thanking_uncle_joe.mp4" preload="auto" playsinline></video>
-    <div class="rescueVideoText finalVideoText">All 10 aliens are saved!</div>
+    <video id="finalThanksVideo" src="https://raw.githubusercontent.com/limkimsze-maker/P3-Space-Max-and-Equivalent-Fractions/746cc07e1b3de6033a0cfd287afedac669b333cd/ten_anime_aliens_thanking_space_max.mp4" preload="auto" playsinline></video>
+    <div class="rescueVideoText finalVideoText">All 10 friends are saved!</div>
     <button class="skipVideoBtn" id="skipFinalVideoBtn" type="button">Skip video</button>
   </div>
 </div>
@@ -554,8 +1195,8 @@
 <div class="endingThanks" id="endingThanks">
   <div class="thanksCard">
     <h1>Mission Complete!</h1>
-    <p>The 10 aliens gather around Uncle Joe.</p>
-    <p><b>“Thank you, Uncle Joe! You saved us by simplifying fractions!”</b></p>
+    <p>Sim’s 10 friends gather around Space Max, still wearing their bright life jackets.</p>
+    <p><b>“Thank you, Space Max! You saved us by simplifying fractions!”</b></p><p>Sim passes Max the <b>Fuel Purifier</b> for his rocket.</p>
     <button class="bigBtn" id="playAgainBtn">Play Again</button>
   </div>
 </div>
@@ -584,9 +1225,11 @@
 
   const UI = {
     startScreen: document.getElementById('startScreen'), startBtn: document.getElementById('startBtn'),
+    dialogueBox: document.getElementById('dialogueBox'), dialogueSpeaker: document.getElementById('dialogueSpeaker'), dialogueDot: document.getElementById('dialogueDot'), dialogueText: document.getElementById('dialogueText'), dialogueNextBtn: document.getElementById('dialogueNextBtn'), dialogueSkipBtn: document.getElementById('dialogueSkipBtn'), dialogueReplayVoiceBtn: document.getElementById('dialogueReplayVoiceBtn'), dialogueReward: document.getElementById('dialogueReward'), goUfoBtn: document.getElementById('goUfoBtn'), howBtnCover: document.getElementById('howBtnCover'), howPanel: document.getElementById('howPanel'),
     soundBtn: document.getElementById('soundBtn'),
     spaceAmbience: document.getElementById('spaceAmbience'),
     beamSound: document.getElementById('beamSound'),
+    thankYouAudio: document.getElementById('thankYouAudio'),
     missionState: document.getElementById('missionState'), savedCount: document.getElementById('savedCount'), progressInner: document.getElementById('progressInner'),
     promptBox: document.getElementById('promptBox'), promptText: document.getElementById('promptText'), rescueBtn: document.getElementById('rescueBtn'), mobileRescueBtn: document.getElementById('mobileRescueBtn'),
     quizModal: document.getElementById('quizModal'), questionNum: document.getElementById('questionNum'), leftNum: document.getElementById('leftNum'), leftDen: document.getElementById('leftDen'),
@@ -620,6 +1263,22 @@
   let endingTime = 0;
   let ambienceOn = true;
   let firstRescueVideoPlayed = false;
+  let dialogueIndex = 0;
+  let activeDialogueLine = null;
+  let dialogueAutoTimer = null;
+  let dialogueLineToken = 0;
+  const simDialogue = [
+    {speaker:'Sim', icon:'👽', text:'Space Max! Please help! Ten of my friends were sailing when their boat capsized.'},
+    {speaker:'Space Max', icon:'🚀', text:'Oh no. Are they safe for now?'},
+    {speaker:'Sim', icon:'👽', text:'They are floating in the sea and wearing life jackets, but they are scared and tired.'},
+    {speaker:'Space Max', icon:'🚀', text:'Stay calm, Sim. I will help you. What can I use to reach them quickly?'},
+    {speaker:'Sim', icon:'🛸', text:'Use my UFO. Fly above each friend. Before every rescue beam, answer one simplified-fraction question.'},
+    {speaker:'Space Max', icon:'🚀', text:'Simplifying fractions means dividing the top and bottom by the same number. I can do that.'},
+    {speaker:'Sim', icon:'👽', text:'Space Max, why are you travelling alone in space?'},
+    {speaker:'Space Max', icon:'🚀', text:'An alien captured me. I escaped, but my rocket is incomplete. I am collecting parts so I can fly back to Earth.'},
+    {speaker:'Sim', icon:'👽', text:'Then let’s help each other. Save all 10 friends, and I will give you the Fuel Purifier for your rocket.', reward:true},
+    {speaker:'Space Max', icon:'🚀', text:'Let’s board the UFO and save your friends.'}
+  ];
 
   const keys = {};
   const mobileKeys = {up:false,down:false,left:false,right:false};
@@ -671,6 +1330,53 @@
     addRock(x,z,Math.random()*1.1+.35, Math.random()>.55?mats.darkRock:mats.purpleRock);
   }
 
+
+  const seaMat = new THREE.MeshStandardMaterial({color:0x1477c9, emissive:0x063c65, roughness:.38, metalness:.05, transparent:true, opacity:.78});
+  const sea = new THREE.Mesh(new THREE.CircleGeometry(45, 96), seaMat);
+  sea.rotation.x = -Math.PI/2;
+  sea.position.set(0,.05,5);
+  sea.receiveShadow = true;
+  scene.add(sea);
+
+  const foamMat = new THREE.MeshBasicMaterial({color:0xeaffff, transparent:true, opacity:.58, side:THREE.DoubleSide});
+  function makeWaveRing(x,z,r=1.2){
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(r,.035,8,64), foamMat);
+    ring.rotation.x = Math.PI/2;
+    ring.position.set(x,.1,z);
+    scene.add(ring);
+    return ring;
+  }
+
+  function makeCapsizedBoat(){
+    const g = new THREE.Group();
+    const hullMat = new THREE.MeshStandardMaterial({color:0xff9d3c, roughness:.55, metalness:.02});
+    const trimMat = new THREE.MeshStandardMaterial({color:0x7c4dff, roughness:.45, metalness:.08});
+    const darkMat = new THREE.MeshStandardMaterial({color:0x3a1f12, roughness:.75, metalness:0});
+    const hull = new THREE.Mesh(new THREE.BoxGeometry(4.6,1.05,1.65), hullMat);
+    hull.position.y=.8;
+    hull.rotation.z=.22;
+    hull.castShadow=true;
+    const cabin = new THREE.Mesh(new THREE.BoxGeometry(1.35,.75,1.05), trimMat);
+    cabin.position.set(.45,1.45,0);
+    cabin.rotation.z=.22;
+    cabin.castShadow=true;
+    const underside = new THREE.Mesh(new THREE.BoxGeometry(4.15,.18,1.25), darkMat);
+    underside.position.set(0,.18,0);
+    underside.rotation.z=.22;
+    const mast = new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,2.1,10), darkMat);
+    mast.position.set(-1.7,1.2,0);
+    mast.rotation.z=1.18;
+    g.add(hull,cabin,underside,mast);
+    g.rotation.set(.1,0,.45);
+    g.position.set(-5,.16,8.5);
+    g.scale.set(1.15,1.15,1.15);
+    scene.add(g);
+    makeWaveRing(-5,8.5,2.9);
+    makeWaveRing(-3.1,7.3,1.1);
+    return g;
+  }
+  const capsizedBoat = makeCapsizedBoat();
+
   const starGeo = new THREE.BufferGeometry();
   const starPositions = [];
   for(let i=0;i<450;i++){ starPositions.push((Math.random()-.5)*170, Math.random()*70+20, (Math.random()-.5)*170); }
@@ -694,6 +1400,19 @@
     const mat = new THREE.MeshStandardMaterial({color, emissive:0x0b4a16, roughness:.58});
     const g = new THREE.Group();
     const body = new THREE.Mesh(new THREE.CapsuleGeometry(.32,.5,8,14), mat); body.position.y=.72; body.castShadow=true; g.add(body);
+    const lifeJacketMat = new THREE.MeshStandardMaterial({color:0xff7a1a, emissive:0x5c1c00, roughness:.5});
+    const lifeJacket = new THREE.Group();
+    const jacketBody = new THREE.Mesh(new THREE.CapsuleGeometry(.36,.28,8,14), lifeJacketMat);
+    jacketBody.position.y=.78;
+    jacketBody.scale.set(1.15,.72,.72);
+    const leftStrap = new THREE.Mesh(new THREE.BoxGeometry(.08,.34,.08), mats.black);
+    leftStrap.position.set(-.14,.9,.25);
+    const rightStrap = new THREE.Mesh(new THREE.BoxGeometry(.08,.34,.08), mats.black);
+    rightStrap.position.set(.14,.9,.25);
+    const buckle = new THREE.Mesh(new THREE.BoxGeometry(.22,.06,.08), mats.black);
+    buckle.position.set(0,.72,.29);
+    lifeJacket.add(jacketBody,leftStrap,rightStrap,buckle);
+    g.add(lifeJacket);
     const head = new THREE.Mesh(new THREE.SphereGeometry(.42,24,18), mat); head.position.y=1.25; head.castShadow=true; g.add(head);
     const eyeGeo = new THREE.SphereGeometry(.075,10,8); const e1 = new THREE.Mesh(eyeGeo, mats.alienEye), e2 = new THREE.Mesh(eyeGeo, mats.alienEye); e1.position.set(-.16,1.32,.34); e2.position.set(.16,1.32,.34); e1.scale.set(.8,1.25,.5); e2.scale.set(.8,1.25,.5); g.add(e1,e2);
     const antennaGeo = new THREE.CapsuleGeometry(.025,.35,4,8); const a1 = new THREE.Mesh(antennaGeo, mat), a2 = new THREE.Mesh(antennaGeo, mat); a1.position.set(-.18,1.68,0); a1.rotation.z=-.42; a2.position.set(.18,1.68,0); a2.rotation.z=.42; g.add(a1,a2);
@@ -701,7 +1420,7 @@
     const armGeo = new THREE.CapsuleGeometry(.045,.42,5,8); const arm1 = new THREE.Mesh(armGeo, mat), arm2 = new THREE.Mesh(armGeo, mat); arm1.position.set(-.4,.8,.05); arm1.rotation.z=.78; arm2.position.set(.4,.8,.05); arm2.rotation.z=-.78; g.add(arm1,arm2);
     const legGeo = new THREE.CapsuleGeometry(.06,.36,5,8); const l1 = new THREE.Mesh(legGeo, mat), l2 = new THREE.Mesh(legGeo, mat); l1.position.set(-.15,.26,0); l1.rotation.z=.18; l2.position.set(.15,.26,0); l2.rotation.z=-.18; g.add(l1,l2);
     const help = new THREE.PointLight(color,.75,5); help.position.y=2.2; g.add(help);
-    g.userData.parts = {arm1,arm2,body,head};
+    g.userData.parts = {arm1,arm2,body,head,lifeJacket};
     return g;
   }
 
@@ -723,11 +1442,69 @@
   const ufo = makeUFO(); ufo.position.set(0,1.65,0); ufo.rotation.y = 0; scene.add(ufo);
   const pad = new THREE.Mesh(new THREE.CylinderGeometry(3.2,3.6,.25,48), makeMat(0x2d344f,.55,.2)); pad.position.set(0,.12,0); pad.castShadow=true; pad.receiveShadow=true; scene.add(pad);
 
+  const SIM_GLTF_URL = 'https://raw.githubusercontent.com/limkimsze-maker/P3-Space-Max-and-Simplifying-Fractions/e7a87745000a382e6c1214f0110391ab3d082a02/Enemy_Small.gltf';
+
+  function makeSimFallback(){
+    const g = makeAlien(0xff8df1);
+    g.scale.set(1.35,1.35,1.35);
+    const wingMat = new THREE.MeshStandardMaterial({color:0x9b5cff, emissive:0x28136a, roughness:.45, transparent:true, opacity:.9});
+    const wingGeo = new THREE.ConeGeometry(.35,.85,3);
+    const w1 = new THREE.Mesh(wingGeo, wingMat);
+    const w2 = new THREE.Mesh(wingGeo, wingMat);
+    w1.position.set(-.55,1.15,-.08); w1.rotation.set(0,0,Math.PI/2);
+    w2.position.set(.55,1.15,-.08); w2.rotation.set(0,0,-Math.PI/2);
+    g.add(w1,w2);
+    g.userData.wings = [w1,w2];
+    return g;
+  }
+
+  let sim = makeSimFallback();
+  sim.position.set(2.95,0,2.35);
+  sim.rotation.y = -Math.PI * .72;
+  sim.userData.float = 0;
+  scene.add(sim);
+
+  async function loadSimModel(){
+    try{
+      const { GLTFLoader } = await import('https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/loaders/GLTFLoader.js');
+      const loader = new GLTFLoader();
+      loader.load(SIM_GLTF_URL, gltf => {
+        const loaded = gltf.scene;
+        loaded.traverse(obj => {
+          if(obj.isMesh){
+            obj.castShadow = true;
+            obj.receiveShadow = true;
+          }
+        });
+        const wrapper = new THREE.Group();
+        const box = new THREE.Box3().setFromObject(loaded);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        loaded.position.sub(center);
+        wrapper.add(loaded);
+        wrapper.position.copy(sim.position);
+        wrapper.rotation.copy(sim.rotation);
+        wrapper.scale.setScalar(1.9 / Math.max(size.x, size.y, size.z, 1));
+        wrapper.userData.float = 0;
+        scene.remove(sim);
+        sim = wrapper;
+        scene.add(sim);
+      }, undefined, () => {
+        console.warn('Sim GLTF could not load. Fallback Sim is used.');
+      });
+    }catch(err){
+      console.warn('Sim GLTF loader could not start. Fallback Sim is used.', err);
+    }
+  }
+  loadSimModel();
+
+
   const alienPositions = [[-12,-12],[10,-15],[18,5],[-19,9],[6,18],[-5,27],[25,-25],[-27,-20],[31,16],[-34,28]];
   const aliens = alienPositions.map((p,i)=>{
     const colors = [0x72ff68,0x7bffcb,0xa8ff59,0x6bff8b,0xc4ff72,0x67eaff,0x9dff55,0x79ff97,0x64ffc8,0xb7ff6d];
     const a = makeAlien(colors[i%colors.length]); a.position.set(p[0],0,p[1]); a.rotation.y = Math.random()*Math.PI*2; a.userData.index = i; a.userData.saved = false; a.userData.float = Math.random()*10; a.visible = false; scene.add(a);
     const marker = new THREE.Mesh(new THREE.TorusGeometry(1.15,.045,8,32), mats.lightBlue); marker.rotation.x = Math.PI/2; marker.position.set(p[0],.08,p[1]); marker.visible = false; scene.add(marker); a.userData.marker = marker;
+    const wave = makeWaveRing(p[0],p[1],.82); wave.visible = false; a.userData.wave = wave;
     return a;
   });
   const endingAliens = [];
@@ -738,11 +1515,11 @@
   function updateUI(){
     UI.savedCount.textContent = saved; UI.progressInner.style.width = `${(saved/10)*100}%`;
     if(mode.startsWith('opening')) UI.missionState.textContent = 'Opening mission';
-    else if(mode === 'flying') UI.missionState.textContent = 'Find aliens';
+    else if(mode === 'flying') UI.missionState.textContent = 'Find Sim’s friends';
     else if(mode === 'quiz') UI.missionState.textContent = 'Answer question';
-    else if(mode === 'beam') UI.missionState.textContent = 'Alien rescue';
-    else if(mode === 'video_pause') UI.missionState.textContent = 'First rescue video';
-    else if(mode === 'ending_video') UI.missionState.textContent = 'Aliens thanking Uncle Joe';
+    else if(mode === 'beam') UI.missionState.textContent = 'Friend rescue';
+    else if(mode === 'video_pause') UI.missionState.textContent = 'First friend rescued';
+    else if(mode === 'ending_video') UI.missionState.textContent = 'Sim’s friends thank Space Max';
     else if(mode.startsWith('ending')) UI.missionState.textContent = 'Mission complete';
   }
 
@@ -754,14 +1531,157 @@
   function bindHold(id, prop){ const el=document.getElementById(id); const start=e=>{e.preventDefault(); mobileKeys[prop]=true;}; const stop=e=>{e.preventDefault(); mobileKeys[prop]=false;}; el.addEventListener('pointerdown', start); el.addEventListener('pointerup', stop); el.addEventListener('pointercancel', stop); el.addEventListener('pointerleave', stop); }
   bindHold('upBtn','up'); bindHold('downBtn','down'); bindHold('leftBtn','left'); bindHold('rightBtn','right');
 
-  UI.startBtn.addEventListener('click', ()=>{
-    UI.startScreen.style.display='none';
+  function clearDialogueAutoTimer(){
+    if(dialogueAutoTimer){
+      clearTimeout(dialogueAutoTimer);
+      dialogueAutoTimer = null;
+    }
+  }
+
+  function getDialogueVoice(speaker){
+    if(!('speechSynthesis' in window)) return null;
+    const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+    if(!voices || !voices.length) return null;
+    const english = voices.filter(v => /^en/i.test(v.lang || ''));
+    const pool = english.length ? english : voices;
+    if(String(speaker).toLowerCase().includes('sim')){
+      return pool.find(v => /female|samantha|victoria|karen|zira|google uk english female/i.test(v.name)) || pool[1] || pool[0];
+    }
+    return pool.find(v => /male|daniel|alex|david|google uk english male/i.test(v.name)) || pool[0];
+  }
+
+  function estimateDialogueDuration(text){
+    const len = String(text || '').length;
+    return Math.max(2300, Math.min(7200, 1200 + len * 62));
+  }
+
+  function speakDialogueLine(line, onDone){
+    activeDialogueLine = line;
+    clearDialogueAutoTimer();
+
+    const token = ++dialogueLineToken;
+    const safeDone = () => {
+      if(token !== dialogueLineToken) return;
+      clearDialogueAutoTimer();
+      onDone && onDone();
+    };
+
+    const fallbackMs = estimateDialogueDuration(line && line.text);
+    dialogueAutoTimer = setTimeout(safeDone, fallbackMs + 900);
+
+    if(!ambienceOn || !line || !('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined'){
+      return;
+    }
+
+    try{
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(line.text || '');
+      const speaker = String(line.speaker || '').toLowerCase();
+      utter.lang = 'en-US';
+      if(speaker.includes('sim')){
+        utter.pitch = 1.42;
+        utter.rate = 1.05;
+        utter.volume = .95;
+      }else{
+        utter.pitch = .78;
+        utter.rate = .88;
+        utter.volume = .95;
+      }
+      const v = getDialogueVoice(line.speaker || '');
+      if(v) utter.voice = v;
+      utter.onend = () => setTimeout(safeDone, 420);
+      utter.onerror = () => {};
+      window.speechSynthesis.speak(utter);
+    }catch(e){
+      // If speech synthesis fails, the timer still advances the dialogue.
+    }
+  }
+
+  function stopDialogueVoice(){
+    clearDialogueAutoTimer();
+    dialogueLineToken++;
+    try{ if('speechSynthesis' in window) window.speechSynthesis.cancel(); }catch(e){}
+  }
+
+  function showDialogueLine(){
+    const line = simDialogue[dialogueIndex] || {};
+    UI.dialogueSpeaker.textContent = line.speaker || '';
+    UI.dialogueSpeaker.classList.toggle('sim', String(line.speaker || '').toLowerCase().includes('sim'));
+    UI.dialogueSpeaker.classList.toggle('max', String(line.speaker || '').toLowerCase().includes('max'));
+    if(UI.dialogueDot) UI.dialogueDot.textContent = line.icon || '✨';
+    UI.dialogueText.textContent = line.text || '';
+    if(UI.dialogueReward) UI.dialogueReward.style.display = line.reward ? 'inline-block' : 'none';
+    UI.dialogueNextBtn.textContent = dialogueIndex === simDialogue.length - 1 ? 'Board UFO ▶' : 'Next ▶';
+    startTone();
+    speakDialogueLine(line, advanceSimDialogue);
+  }
+
+  function startSimDialogue(){
+    mode='opening_dialogue';
+    introTime=0;
+    dialogueIndex=0;
+    UI.dialogueBox.style.display='block';
+    showDialogueLine();
+    updateUI();
+  }
+
+  function advanceSimDialogue(){
+    if(mode !== 'opening_dialogue') return;
+    stopDialogueVoice();
+    dialogueIndex++;
+    if(dialogueIndex >= simDialogue.length){
+      UI.dialogueBox.style.display='none';
+      if(UI.dialogueReward) UI.dialogueReward.style.display = 'none';
+      mode='opening_walk';
+      introTime=0;
+      updateUI();
+      return;
+    }
+    showDialogueLine();
+  }
+
+  function skipSimDialogue(){
+    if(mode !== 'opening_dialogue') return;
+    stopDialogueVoice();
+    UI.dialogueBox.style.display='none';
+    if(UI.dialogueReward) UI.dialogueReward.style.display = 'none';
     mode='opening_walk';
     introTime=0;
     updateUI();
+  }
+
+  UI.startBtn.addEventListener('click', ()=>{
+    UI.startScreen.style.display='none';
     startTone();
     startAmbience();
+    startSimDialogue();
   });
+  if(UI.goUfoBtn){
+    UI.goUfoBtn.addEventListener('click', ()=>{
+      UI.startScreen.style.display='none';
+      startTone();
+      startAmbience();
+      skipSimDialogue();
+      mode='opening_walk';
+      introTime=0;
+      updateUI();
+    });
+  }
+  if(UI.howBtnCover && UI.howPanel){
+    UI.howBtnCover.addEventListener('click', ()=>{
+      UI.howPanel.style.display = UI.howPanel.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+  UI.dialogueNextBtn.addEventListener('click', ()=>{ stopDialogueVoice(); advanceSimDialogue(); });
+  if(UI.dialogueSkipBtn) UI.dialogueSkipBtn.addEventListener('click', skipSimDialogue);
+  if(UI.dialogueReplayVoiceBtn){
+    UI.dialogueReplayVoiceBtn.addEventListener('click', ()=>{
+      if(activeDialogueLine){
+        stopDialogueVoice();
+        speakDialogueLine(activeDialogueLine, advanceSimDialogue);
+      }
+    });
+  }
   UI.soundBtn.addEventListener('click', toggleAmbience);
   UI.rescueBtn.addEventListener('click', openQuestion); UI.mobileRescueBtn.addEventListener('click', ()=>{ if(mode === 'flying' && currentAlien) openQuestion(); });
   UI.checkBtn.addEventListener('click', checkAnswer);
@@ -799,8 +1719,8 @@
   UI.finalThanksVideo.addEventListener('ended', closeFinalThanksVideo);
 
   function setupExploration(){
-    mode = 'flying'; saved = 0; currentAlien = null; ufo.position.set(0,6,0); ufo.rotation.set(0,0,0); ufo.scale.set(1,1,1); uncleJoe.visible = false; pad.visible = false;
-    for(const a of aliens){ a.visible = true; a.userData.marker.visible = true; }
+    mode = 'flying'; saved = 0; currentAlien = null; ufo.position.set(0,6,0); ufo.rotation.set(0,0,0); ufo.scale.set(1,1,1); uncleJoe.visible = false; if(sim) sim.visible = false; pad.visible = false;
+    for(const a of aliens){ a.visible = true; a.userData.marker.visible = true; if(a.userData.wave) a.userData.wave.visible = true; }
     updateUI();
   }
 
@@ -999,7 +1919,7 @@
       const val = Number(raw);
 
       if(raw !== '' && Number.isInteger(val) && val === 1){
-        UI.resultMsg.textContent = 'Correct! A fraction like 6/6 means 1 whole. This alien can be saved.';
+        UI.resultMsg.textContent = 'Correct! A fraction like 6/6 means 1 whole. This friend can be saved.';
         UI.resultMsg.className = 'resultMsg good';
         UI.saveAlienBtn.classList.add('show');
         successTone();
@@ -1018,7 +1938,7 @@
     const den = Number(denRaw);
 
     if(numRaw !== '' && denRaw !== '' && Number.isInteger(num) && Number.isInteger(den) && num === currentQuestion.answerNum && den === currentQuestion.answerDen){
-      UI.resultMsg.textContent = 'Correct! This is the simplest form. This alien can be saved.';
+      UI.resultMsg.textContent = 'Correct! This is the simplest form. This friend can be saved.';
       UI.resultMsg.className = 'resultMsg good';
       UI.saveAlienBtn.classList.add('show');
       successTone();
@@ -1053,7 +1973,7 @@
   }
 
   function beginBeam(){
-    if(!currentAlien) return; mode = 'beam'; beamTime = 0; ufo.userData.beam.visible = true; ufo.userData.beamGlow.intensity = 2.6; currentAlien.userData.marker.visible = false; updateUI(); playBeamSound();
+    if(!currentAlien) return; mode = 'beam'; beamTime = 0; ufo.userData.beam.visible = true; ufo.userData.beamGlow.intensity = 2.6; currentAlien.userData.marker.visible = false; if(currentAlien.userData.wave) currentAlien.userData.wave.visible = false; updateUI(); playBeamSound();
   }
   function completeBeam(){
     if(!currentAlien) return; currentAlien.userData.saved = true; currentAlien.visible = false; saved++; currentAlien = null; ufo.userData.beam.visible = false; ufo.userData.beamGlow.intensity = 0; updateUI();
@@ -1068,7 +1988,7 @@
   }
   function beginEnding(){
     mode = 'ending_land'; endingTime = 0; pad.visible = true; ufo.userData.beam.visible = false; ufo.userData.beamGlow.intensity = 0;
-    for(const a of aliens){ a.visible = false; a.userData.marker.visible = false; }
+    for(const a of aliens){ a.visible = false; a.userData.marker.visible = false; if(a.userData.wave) a.userData.wave.visible = false; }
     uncleJoe.visible = false; updateUI();
   }
   function playFinalThanksVideo(){
@@ -1077,7 +1997,13 @@
     UI.finalThanksVideo.currentTime = 0;
     UI.finalThanksVideo.volume = 1;
 
-    // Let the ending video be heard clearly.
+    if(UI.thankYouAudio){
+      UI.thankYouAudio.pause();
+      UI.thankYouAudio.currentTime = 0;
+      UI.thankYouAudio.volume = 1;
+    }
+
+    // Let the ending video and thank-you audio be heard clearly.
     if(UI.spaceAmbience){
       UI.spaceAmbience.pause();
     }
@@ -1085,11 +2011,20 @@
     UI.finalThanksVideo.play().catch(()=>{
       closeFinalThanksVideo();
     });
+    if(UI.thankYouAudio){
+      UI.thankYouAudio.play().catch(()=>{
+        // If the browser blocks the MP3, the thank-you video still continues.
+      });
+    }
     updateUI();
   }
 
   function closeFinalThanksVideo(){
     UI.finalThanksVideo.pause();
+    if(UI.thankYouAudio){
+      UI.thankYouAudio.pause();
+      UI.thankYouAudio.currentTime = 0;
+    }
     UI.finalThanksVideoOverlay.style.display = 'none';
     mode = 'ending_thanks';
     UI.endingThanks.style.display = 'flex';
@@ -1102,6 +2037,11 @@
     uncleJoe.visible = true;
     uncleJoe.position.set(0,0,2.8);
     uncleJoe.rotation.y = Math.PI;
+    if(sim){
+      sim.visible = true;
+      sim.position.set(1.5,.25,3.2);
+      sim.rotation.y = -Math.PI * .85;
+    }
     for(const a of endingAliens) a.visible = true;
     playFinalThanksVideo();
   }
@@ -1127,10 +2067,10 @@
     UI.spaceAmbience.loop = true;
     if(ambienceOn){
       UI.spaceAmbience.play().then(()=>{
-        UI.soundBtn.textContent = '🔊 Ambience On';
+        UI.soundBtn.textContent = '🔊 Sound On';
         UI.soundBtn.classList.remove('off');
       }).catch(()=>{
-        UI.soundBtn.textContent = '▶ Start Ambience';
+        UI.soundBtn.textContent = '▶ Start Sound';
         UI.soundBtn.classList.remove('off');
       });
     }
@@ -1144,7 +2084,8 @@
       startAmbience();
     }else{
       UI.spaceAmbience.pause();
-      UI.soundBtn.textContent = '🔇 Ambience Off';
+      stopDialogueVoice();
+      UI.soundBtn.textContent = '🔇 Sound Off';
       UI.soundBtn.classList.add('off');
     }
   }
@@ -1175,12 +2116,25 @@
   function animateIntro(dt){
     introTime += dt; const t = introTime;
     camera.position.lerp(new THREE.Vector3(0,5.3,10.5), .04); camera.lookAt(0,1.4,0);
-    pad.visible = true; uncleJoe.visible = true; ufo.visible = true; for(const a of aliens){ a.visible = false; a.userData.marker.visible = false; }
+    pad.visible = true; uncleJoe.visible = true; ufo.visible = true; if(sim) sim.visible = true; for(const a of aliens){ a.visible = false; a.userData.marker.visible = false; }
 
-    if(mode === 'opening_walk'){
+    if(mode === 'opening_dialogue'){
+      uncleJoe.visible = true;
+      uncleJoe.scale.setScalar(1.1);
+      uncleJoe.position.set(-2.5,0,2.18);
+      uncleJoe.rotation.y = Math.PI/2;
+      ufo.userData.doorPivot.rotation.x = 0;
+      if(sim){
+        sim.visible = true;
+        sim.position.y = .25 + Math.sin(t*4)*.08;
+        sim.rotation.y = -Math.PI * .72 + Math.sin(t*2)*.08;
+      }
+      camera.position.lerp(new THREE.Vector3(0,4.6,8.2), .05);
+      camera.lookAt(.2,1.4,1.6);
+    } else if(mode === 'opening_walk'){
       const p = Math.min(1, t/2.9);
 
-      // Uncle Joe walks to the visible chamber door at the front of the UFO.
+      // Space Max walks to the visible chamber door at the front of the UFO.
       uncleJoe.visible = true;
       uncleJoe.scale.setScalar(1.1);
       uncleJoe.position.x = -8 + p*6.9;
@@ -1243,7 +2197,7 @@
 
     let nearest=null, nearestD=999;
     for(const a of aliens){ if(a.userData.saved) continue; const d=Math.hypot(ufo.position.x-a.position.x, ufo.position.z-a.position.z); if(d < nearestD){ nearestD=d; nearest=a; } }
-    if(nearest && nearestD < 2.3){ currentAlien = nearest; UI.promptBox.style.display = 'block'; UI.promptText.innerHTML = `<strong>Alien found!</strong> Answer 1 question to save Alien ${nearest.userData.index+1}.`; }
+    if(nearest && nearestD < 2.3){ currentAlien = nearest; UI.promptBox.style.display = 'block'; UI.promptText.innerHTML = `<strong>Friend found!</strong> Answer 1 simplified-fraction question to save Friend ${nearest.userData.index+1}.`; }
     else { currentAlien = null; UI.promptBox.style.display = 'none'; }
 
     camera.position.lerp(new THREE.Vector3(ufo.position.x,18,ufo.position.z+16), .06); camera.lookAt(ufo.position.x,ufo.position.y,ufo.position.z);
@@ -1266,6 +2220,7 @@
 
   function animateWorldObjects(time){
     stars.rotation.y += .0004;
+    if(sim && sim.visible){ sim.position.y += Math.sin(time*3)*0.0005; sim.rotation.y += Math.sin(time*2)*0.0015; }
     for(const a of aliens){ if(!a.visible) continue; a.userData.float += .04; a.position.y = Math.sin(a.userData.float)*.08; const parts=a.userData.parts; if(parts){ parts.arm1.rotation.z = .78 + Math.sin(time*4 + a.userData.index)*.22; parts.arm2.rotation.z = -.78 - Math.sin(time*4 + a.userData.index)*.22; } if(a.userData.marker){ a.userData.marker.rotation.z += .025; } }
     for(let i=0;i<endingAliens.length;i++){ const a=endingAliens[i]; if(!a.visible) continue; a.position.y = Math.sin(time*3+i)*.05; a.rotation.y += Math.sin(time*2+i)*.002; }
   }
@@ -1277,7 +2232,7 @@
     else if(mode === 'beam') updateBeam(dt);
     else if(mode === 'ending_land') updateEnding(dt);
     else if(mode === 'quiz' && currentAlien){ camera.position.lerp(new THREE.Vector3(ufo.position.x,10,ufo.position.z+11), .03); camera.lookAt(currentAlien.position.x,1.5,currentAlien.position.z); }
-    if(mode === 'opening_idle'){ camera.position.lerp(new THREE.Vector3(0,5.3,10.5), .04); camera.lookAt(0,1.4,0); ufo.position.y = 1.65 + Math.sin(time*2)*.08; uncleJoe.visible = true; }
+    if(mode === 'opening_idle'){ camera.position.lerp(new THREE.Vector3(0,5.3,10.5), .04); camera.lookAt(0,1.4,0); ufo.position.y = 1.65 + Math.sin(time*2)*.08; uncleJoe.visible = true; if(sim) sim.visible = true; }
     animateWorldObjects(time); updateUI(); renderer.render(scene, camera); requestAnimationFrame(loop);
   }
 
